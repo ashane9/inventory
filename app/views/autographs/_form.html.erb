@@ -1,0 +1,50 @@
+<%= form_with(model: autograph, local: true) do |form| %>
+  <% if autograph.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(autograph.errors.count, "error") %> prohibited this autograph from being saved:</h2>
+
+      <ul>
+        <% autograph.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<br>
+<%= render 'items/item_lookup'%>
+<br>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :authentication %>
+    <%= form.collection_select :authentication_id, Authentication.order(:name),:id,:name, {prompt: "Select Authentication", 
+    include_blank: 'Add New Authentication'}, {:onchange => "add_new_authentication()"} %>
+  </div>
+
+  <div class="field" id="new_authentication" style="display:none">
+    <%= fields_for @authentication do |authentication_form|%>
+      <%= authentication_form.label 'Enter Authentication' %>
+      <%= authentication_form.text_field :name %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :authentication_number %>
+    <%= form.text_field :authentication_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  
+<% end %>

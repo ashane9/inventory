@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @autograph.name %>
+</p>
+
+<p>
+  <strong>Authentication:</strong>
+  <%= @autograph.authentication %>
+</p>
+
+<p>
+  <strong>Authentication number:</strong>
+  <%= @autograph.authentication_number %>
+</p>
+
+
+<%= link_to 'Add Image', new_autograph_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>
+
+<%= link_to 'Add Purchase Information', new_purchase_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>
+
+<%= link_to 'Add Item Value', new_value_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>
+
+<%= link_to 'Edit', edit_autograph_path(@autograph) %> |
+<%= link_to 'Back', autographs_path %>

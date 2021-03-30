@@ -1,0 +1,1 @@
+json.array! @autographs, partial: "autographs/autograph", as: :autograph

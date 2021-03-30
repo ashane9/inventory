@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  estimated_value: 9.99
+  as_of_date: 2021-03-16
+
+two:
+  estimated_value: 9.99
+  as_of_date: 2021-03-16

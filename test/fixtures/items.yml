@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  itemnumber: 
+  itemname: MyString
+  description: MyText
+  type: 
+  manufacturer: MyString
+  size: MyString
+  upc: MyString
+  imageid: 
+  purchaseid: 
+
+two:
+  itemnumber: 
+  itemname: MyString
+  description: MyText
+  type: 
+  manufacturer: MyString
+  size: MyString
+  upc: MyString
+  imageid: 
+  purchaseid: 

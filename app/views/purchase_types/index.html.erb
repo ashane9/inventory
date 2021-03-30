@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Purchase Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>TypeName</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchase_types.each do |purchase_type| %>
+      <tr>
+        <td><%= purchase_type.type_name %></td>
+        <td><%= link_to 'Show', purchase_type %></td>
+        <td><%= link_to 'Edit', edit_purchase_type_path(purchase_type) %></td>
+        <td><%= link_to 'Destroy', purchase_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Purchase Type', new_purchase_type_path %>

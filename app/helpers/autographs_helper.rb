@@ -1,0 +1,2 @@
+module AutographsHelper
+end

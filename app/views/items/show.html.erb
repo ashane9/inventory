@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item Name:</strong>
+  <%= @item.item_name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @item.description %>
+</p>
+
+<p>
+  <strong>Item Type:</strong>
+  <%= ItemType.where(id: @item.item_type.id).first.type_name %>
+</p>
+
+<p>
+  <strong>Manufacturer:</strong>
+  <%= @item.manufacturer %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @item.size %>
+</p>
+
+<p>
+  <strong>Upc:</strong>
+  <%= @item.upc %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @item.image, style: 'height:20%;width:20%;' %>
+</p>
+
+<%= link_to 'Add Purchase Information', new_purchase_path(from: 'item_path',from_id: @item.id), {class: "btn btn-primary btn-md"} %>
+
+<%= link_to 'Add Autograph', new_autograph_path(from: "item_path",from_id: @item.id), {class: "btn btn-primary btn-md"} %>
+
+<%= link_to 'Add Item Value', new_value_path(from: 'item_path',from_id: @item.id), {class: "btn btn-primary btn-md"} %>
+<br>
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', back(:items_path) %>

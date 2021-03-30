@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Items</h1>
+
+<h3>Search</h3>
+<input type="search" id="item-search" placeholder="Enter name..." data-behavior="autocomplete">
+<br>
+<br>
+
+<div id="item-search-result" style="display:none">
+  <div class="row">
+    <div class="col-sm-4">Item Id:</div>
+    <div class="col-sm-4">Item Name:</div>
+    <div class="col-sm-4">Item Description:</div>
+</div>
+  <div class="row">
+    <div id="result-id" class="col-sm-4"></div>
+    <div id="result-name" class="col-sm-4"></div>
+    <div id="result-desc" class="col-sm-4"></div>
+</div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item Id</th>
+      <th>Item Name</th>
+      <th>Description</th>
+      <th>Item Type Id</th>
+      <th>Manufacturer</th>
+      <th>Size</th>
+      <th>UPC</th>
+      <th>Image Id</th>
+      <th>Purchase Id</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.item_name %></td>
+        <td><%= item.description %></td>
+        <td><%= item.item_type.id %></td>
+        <td><%= item.manufacturer %></td>
+        <td><%= item.size %></td>
+        <td><%= item.upc %></td>
+        <td><%= link_to 'Show', item %></td>
+        <td><%= link_to 'Edit', edit_item_path(item) %></td>
+        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item', new_item_path %>
+
+
+
+

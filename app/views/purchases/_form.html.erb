@@ -1,0 +1,65 @@
+<%= form_with(model: purchase, local: true) do |form| %>
+  <% if purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+      <ul>
+        <% purchase.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :purchase_type %>
+    <%= form.collection_select :purchase_type_id, PurchaseType.order(:type_name),:id,:type_name, {prompt: "Select Purchase Type", 
+    include_blank: 'Add New Purchase Type'}, {:onchange => "add_new_purchase_type()"} %>
+  </div>
+
+  <div class="field" id="new_purchase_type" style="display:none">
+    <%= fields_for @purchase_type do |purchase_type_form|%>
+      <%= purchase_type_form.label 'Enter Purchase Type' %>
+      <%= purchase_type_form.text_field :type_name %>
+    <% end %>
+  </div>
+   
+  <div class="field">
+    <%= form.label :invoice_number %>
+    <%= form.text_field :invoice_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.text_field 'date', placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3'} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sale_price %>    
+    <%= form.text_field :sale_price, placeholder: '$0.00', value: number_to_currency(form.object.sale_price) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :buyer_premium %>
+    <%= form.text_field :buyer_premium, placeholder: '$0.00', value: number_to_currency(form.object.sale_price) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipping %>
+    <%= form.text_field :shipping, placeholder: '$0.00', value: number_to_currency(form.object.sale_price) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_cost %>
+    <%= form.text_field :total_cost, placeholder: '$0.00', value: number_to_currency(form.object.sale_price) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

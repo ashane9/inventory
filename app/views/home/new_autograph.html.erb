@@ -1,0 +1,9 @@
+<div>
+  <h4>Is this autograph on a new item?</h3>
+  <div class="switch">	
+    <%= link_to 'Yes', new_item_path(from: 'new_autograph_path'), {class: "btn btn-primary btn-md"} %>
+    <%= link_to 'No', new_autograph_path, {class: "btn btn-primary btn-md"} %>    
+  </div>
+</div>
+
+<%= link_to 'Cancel', root_path %>
