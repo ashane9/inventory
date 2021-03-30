@@ -20,29 +20,27 @@
 </div>
 </div>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Item Id</th>
-      <th>Item Name</th>
-      <th>Description</th>
-      <th>Item Type Id</th>
-      <th>Manufacturer</th>
-      <th>Size</th>
-      <th>UPC</th>
-      <th>Image Id</th>
-      <th>Purchase Id</th>
+      <th scope="col">Item Id</th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Item Type</th>
+      <th scope="col">Manufacturer</th>
+      <th scope="col">Size</th>
+      <th scope="col">UPC</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @items.each do |item| %>
-      <tr>
+      <tr scope="row">
         <td><%= item.id %></td>
         <td><%= item.item_name %></td>
         <td><%= item.description %></td>
-        <td><%= item.item_type.id %></td>
+        <td><%= ItemType.get_type_name(item.item_type.id) %></td>
         <td><%= item.manufacturer %></td>
         <td><%= item.size %></td>
         <td><%= item.upc %></td>
