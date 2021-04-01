@@ -28,6 +28,21 @@
           <li class="nav-item">   
             <%= link_to "Item List", items_path, {class: "nav-link"}%>
           </li>
+          <li class="nav-item">   
+            <%= link_to "Autograph List", autographs_path, {class: "nav-link"}%>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Manage
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to "Item Types", item_types_path, {class: "dropdown-item nav-link"}%>
+              <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link"}%>
+              <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link"}%>
+              <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link"}%>
+              <%= link_to "Values", values_path, {class: "dropdown-item nav-link"}%>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>

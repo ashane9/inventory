@@ -20,7 +20,6 @@ class ItemsController < ApplicationController
   def search
     q = params[:q].downcase
     @items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
-    puts @items.first.item_name
   end
 
   # GET /items/new

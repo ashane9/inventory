@@ -39,6 +39,11 @@ class CreateInventoryTables < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    create_join_table :autographs, :authentications do |t|
+      t.string :authentication_number, null: true
+      t.timestamps
+    end
+
     create_table :items do |t|
       t.string :item_name, null: false
       t.text :description, null: true
@@ -53,8 +58,6 @@ class CreateInventoryTables < ActiveRecord::Migration[6.0]
     
     create_table :autographs do |t|
       t.string :name, null: false
-      t.references :authentication, foreign_key: true, null: true
-      t.string :authentication_number, null: true
       t.references :item, foreign_key: true, null: false
       t.references :purchase, foreign_key: true, null: true
       t.references :value, foreign_key: true, null: true

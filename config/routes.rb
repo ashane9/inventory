@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'home/new_autograph'
   get 'items/search', to: 'items#search'
+  post 'autographs/get_item', to: 'autographs#get_item'
   get 'reset', to: 'home#reset'
   resources :values
   resources :purchase_types

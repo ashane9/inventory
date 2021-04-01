@@ -19,10 +19,20 @@ var item_search = function(){
         $("#item-search-result").show();
         var index = $("#item-search").getSelectedItemData();
         console.log(index);
-  
+
         $("#result-id").text(index.id).trigger("change");
         $("#result-name").text(index.name).trigger("change");
         $("#result-desc").text(index.type).trigger("change");
+        $.ajax({
+          url: "/autographs/get_item",
+          type: "POST",
+          data: {"item_id" : index.id},
+          dataType: "json"
+          // ,
+          // success: function(data) {
+          //     alert('successfully');
+          //   }
+          });
       }
     }
   };

@@ -32,9 +32,11 @@
     <% end %>
   </div>
 
-  <div class="field">
-    <%= form.label :authentication_number %>
-    <%= form.text_field :authentication_number %>
+  <div class="field">  
+    <%= fields_for @autograph_authentication do |auto_auth_form|%>
+      <%= auto_auth_form.label :authentication_number %>
+      <%= auto_auth_form.text_field :authentication_number %>
+    <% end %>
   </div>
 
   <div class="field">

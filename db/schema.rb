@@ -46,16 +46,21 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "authentications_autographs", id: false, force: :cascade do |t|
+    t.integer "autograph_id", null: false
+    t.integer "authentication_id", null: false
+    t.string "authentication_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "autographs", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "authentication_id"
-    t.string "authentication_number"
     t.bigint "item_id", null: false
     t.bigint "purchase_id"
     t.bigint "value_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["authentication_id"], name: "index_autographs_on_authentication_id"
     t.index ["item_id"], name: "index_autographs_on_item_id"
     t.index ["purchase_id"], name: "index_autographs_on_purchase_id"
     t.index ["value_id"], name: "index_autographs_on_value_id"
@@ -118,7 +123,6 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "autographs", "authentications"
   add_foreign_key "autographs", "items"
   add_foreign_key "autographs", "purchases"
   add_foreign_key "autographs", "values"
