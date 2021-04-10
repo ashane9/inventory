@@ -1,14 +1,11 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: %i[ show edit update destroy ]
-  helper_method :format_currency
+  helper_method :add_purchase_id
 
   # GET /purchases or /purchases.json
   def index
+    clear_redirect
     @purchases = Purchase.all
-  end
-
-  def format_currency
-    ApplicationController.helpers.number_to_currency(read(:sale_price))
   end
 
   def return_value_of_symbol(obj,sym)
@@ -23,20 +20,29 @@ class PurchasesController < ApplicationController
   # GET /purchases/new
   def new
     @purchase = Purchase.new
-    
-    unless params[:from].nil?
-      @redirect_path = "#{params[:from]}_path" 
-      Rails.cache.write("purchase_redirect_path", @redirect_path)
-    end
+    redirect_setup
   end
 
   # GET /purchases/1/edit
   def edit
   end
 
+  def add_purchase_id(purchase_id)
+    @from_id = Rails.cache.read("from_id")
+    Rails.cache.delete("from_id")
+    if @from_id != ''
+      if @redirect_path.include? 'item'
+        Item.where(id: @from_id).update({purchase_id: purchase_id})
+      elsif @redirect_path.include? 'autograph'
+        Autograph.where(id: @from_id).update({purchase_id: purchase_id})
+      end
+    end
+  end
+
   # POST /purchases or /purchases.json
-  def create
-    
+  def create    
+    @redirect_path = Rails.cache.read("redirect_path")
+    puts @redirect_path
     if params[:type_name] != ''
       @purchase_type = PurchaseType.new(purchase_type_params)
       @purchase_type.save
@@ -46,12 +52,19 @@ class PurchasesController < ApplicationController
     end
     
     @purchase = Purchase.new(purchase_params.merge!({purchase_type_id: @purchase_type_id}))
-
+    
     respond_to do |format|
       if @purchase.save
-        unless @redirect_path.nil?
-          format.html { redirect_to send @redirect_path, notice: "Purchase was successfully created." }
-          Rails.cache.delete("purchase_redirect_path")
+        
+        add_purchase_id(@purchase.id)
+        unless @redirect_path.nil? or @redirect_path.eql? 'new_purchase_path'
+          if @from_id.nil?
+            format.html { redirect_to send @redirect_path, notice: "Purchase was successfully created." }
+          else
+            format.html { redirect_to send @redirect_path, @from_id, notice: "Purchase was successfully created." }
+          end
+          Rails.cache.delete("redirect_path")
+          puts "redirect_path is deleted in purchases"
         else
           format.html { redirect_to @purchase, notice: "Purchase was successfully created." }
           format.json { render :show, status: :created, location: @purchase }

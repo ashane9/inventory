@@ -3,6 +3,7 @@ class AutographsController < ApplicationController
 
   # GET /autographs or /autographs.json
   def index
+    clear_redirect
     @autographs = Autograph.all
   end
 
@@ -37,18 +38,20 @@ class AutographsController < ApplicationController
   # GET /autographs/1/edit
   def edit
   end
-
-  # POST /autographs or /autographs.json
+  
+   # POST /autographs or /autographs.json
   def create
     redirect_path = Rails.cache.read("redirect_path")
     item_id = Rails.cache.read("item_id")
     authentication_id = nil
     Rails.cache.delete("item_id")
 
+    puts "item_id is deleted in autographs"
     @autograph = Autograph.new(autograph_params.merge!({item_id: item_id }))
 
     respond_to do |format|
       if @autograph.save
+        
         if params[:name] != ''
           authentication = Authentication.new(authentication_params)
           authentication.save
@@ -64,10 +67,17 @@ class AutographsController < ApplicationController
           autograph_authentication = AuthenticationsAutograph.new(merged_params)
           autograph_authentication.save
         end
-        
-        unless redirect_path.nil?
+                
+        Rails.cache.delete("redirect_path")
+        puts "redirect_path is deleted in autographs"
+        unless redirect_path.nil? or redirect_path.eql? 'new_autograph_path'
+          if item_id.nil?
+            format.html { redirect_to send redirect_path, notice: "Autograph was successfully created." }
+          else
+            format.html { redirect_to send redirect_path, item_id, notice: "Autograph was successfully created." }
+          end
           Rails.cache.delete("redirect_path")
-          format.html { redirect_to send redirect_path, notice: "Autograph was successfully created." }
+          puts "redirect_path is deleted in autographs"
         else
           format.html { redirect_to @autograph, notice: "Autograph was successfully created." }
           format.json { render :show, status: :created, location: @autograph }

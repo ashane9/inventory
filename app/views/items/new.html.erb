@@ -1,7 +1,27 @@
-<h1>New Item</h1>
 
-<%= render 'form', item: @item %>
+<div class="container-fluid h-100">
+  <!--<div class="d-flex">
+    <%= link_to back(:items_path), class: "flex-column align-items-start" do %>
+      <i class="fas fa-arrow-circle-left fa-3x"></i>
+    <% end %>
+    <div class="d-flex align-items-center">  
+      <h1 class="display-4">New Item</h1>
+    </div>   
+  </div>-->
+  <div class="row align-items-center">
+    <div class="col-1">
+      <%= link_to back(:items_path), class: "flex-column align-items-start" do %>
+        <i class="fas fa-chevron-circle-left fa-3x"></i>
+      <% end %>
+    </div>
+    <!--<div class="col-4 mx-auto">-->
+    <div class="col-10 text-center pt-1">
+      <h1 class="display-4">New Item</h1>
+    </div>
+  </div>
 
-<%= link_to 'Back', back(:items_path) %>
-
-<%= link_to 'Cancel', root_path %>
+  <div class="d-flex align-items-center flex-column h-100 my-3">
+    <%= render 'form', item: @item %>
+    <%= link_to 'Cancel', root_path %>
+  </div>
+</div>

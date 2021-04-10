@@ -14,7 +14,68 @@
   *= require_tree .
   *= require_self
  */
-
- @import "bootstrap-sprockets";
-@import "bootstrap";
+@import "bootstrap/scss/bootstrap";
 @import 'easy-autocomplete/dist/easy-autocomplete';
+
+.fa-chevron-circle-left {
+  color: #343a40;
+}
+
+// /* Extra small devices (phones, 600px and down) */
+// @media (max-width: 300px) {
+//   .navbar-brand{
+//     font-size: calc(2.5rem);
+//     }
+//   .nav-item{
+//     font-size: calc(2.3rem);
+//   }
+// }
+
+// /* Small devices (portrait tablets and large phones, 600px and up) */
+// @media (max-width: 600px) {
+//   .navbar-brand{
+//     font-size: calc(2.3rem);
+//     }
+//     .nav-item{
+//       font-size: calc(2rem);
+//     }
+// }
+
+// /* Medium devices (landscape tablets, 768px and up) */
+// @media (max-width: 768px) {
+//   .navbar-brand{
+//     font-size: calc(2rem);
+//     }    
+//   .nav-item{
+//     font-size: calc(1.8rem);
+//   }
+// }
+
+// /* Large devices (laptops/desktops, 992px and up) */
+// @media (max-width: 989px) {
+//   .navbar-brand{
+//     font-size: calc(1.7rem);
+//     }
+//     .nav-item{
+//       font-size: calc(1.5rem);
+//     }
+// }
+
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media (max-width: 1200px) {
+//   .navbar-brand{
+//     font-size: calc(1.5rem);
+//     }
+//     .nav-item{
+//       font-size: calc(1.1rem);
+//     }
+// }
+
+// @media (min-width: 1200px) {
+//   .navbar-brand{
+//     font-size: calc(1.5rem);
+//     }
+//     .nav-item{
+//       font-size: calc(1.1rem);
+//     }
+// }

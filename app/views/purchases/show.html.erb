@@ -1,44 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Invoice number:</strong>
-  <%= @purchase.invoice_number %>
-</p>
-
-<p>
-  <strong>Purchase type:</strong>
-  <%= @purchase.purchase_type %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @purchase.location %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @purchase.date %>
-</p>
-
-<p>
-  <strong>Sale price:</strong>
-  <%= number_to_currency(@purchase.sale_price) %>
-</p>
-
-<p>
-  <strong>Buyer premium:</strong>
-  <%= number_to_currency(@purchase.buyer_premium) %>
-</p>
-
-<p>
-  <strong>Shipping:</strong>
-  <%= number_to_currency(@purchase.shipping) %>
-</p>
-
-<p>
-  <strong>Total cost:</strong>
-  <%= number_to_currency(@purchase.total_cost) %>
-</p>
+<%= render 'info', object: @purchase %>
 
 <%= link_to 'Edit', edit_purchase_path(@purchase) %> |
 <%= link_to 'Back', back(:purchases_path) %>

@@ -29,3 +29,4 @@ yarn add jquery
 yarn add popper.js
 yarn add flatpickr
 yarn add easy-autocomplete
+yarn add @fortawesome/fontawesome-free

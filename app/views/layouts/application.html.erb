@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
     <title>Inventory</title>
     <%= csrf_meta_tags %>
@@ -10,42 +10,49 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <%= link_to "Andrew's Collectibles", root_path, {class: "navbar-brand"}%>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <%= link_to "Search", root_path, {class: "nav-link"}%>
-          </li>
-          <li class="nav-item">   
-            <%= link_to "Add New Item", new_item_path, {class: "nav-link"}%>
-          </li>
-          <li class="nav-item">   
-            <%= link_to "Add New Autograph", home_new_autograph_path, {class: "nav-link"}%>
-          </li>
-          <li class="nav-item">   
-            <%= link_to "Item List", items_path, {class: "nav-link"}%>
-          </li>
-          <li class="nav-item">   
-            <%= link_to "Autograph List", autographs_path, {class: "nav-link"}%>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Manage
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "Item Types", item_types_path, {class: "dropdown-item nav-link"}%>
-              <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link"}%>
-              <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link"}%>
-              <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link"}%>
-              <%= link_to "Values", values_path, {class: "dropdown-item nav-link"}%>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <body class="h-100 bg-light">
+
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+          <%= link_to "Andrew's Collectibles", root_path, {class: "navbar-brand"}%>
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navMenu" aria-expanded="false" aria-controls="navMenu">
+            <span class="navbar-toggler-icon"></span>                   
+          </button>      
+      
+        <div class="collapse navbar-collapse my-lg-2" id="navMenu">
+          <ul class="nav navbar-nav mx-auto">
+            <li class="nav-item">
+              <%= link_to "Search", root_path, {class: "nav-link"}%>
+            </li>
+            <li class="nav-item">   
+              <%= link_to "Add New Item", new_item_path, {class: "nav-link"}%>
+            </li>
+            <li class="nav-item">   
+              <%= link_to "Add New Autograph", home_new_autograph_path, {class: "nav-link"}%>
+            </li>
+            <li class="nav-item">   
+              <%= link_to "Item List", items_path, {class: "nav-link"}%>
+            </li>
+            <li class="nav-item">   
+              <%= link_to "Autograph List", autographs_path, {class: "nav-link"}%>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                Manage
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to "Item Types", item_types_path, {class: "dropdown-item nav-link"}%>
+                <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link"}%>
+                <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link"}%>
+                <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link"}%>
+                <%= link_to "Values", values_path, {class: "dropdown-item nav-link"}%>
+              </div>
+            </li>
+          </ul>
+        </div>
     </nav>
+
     <%= yield %>
   </body>
 </html>

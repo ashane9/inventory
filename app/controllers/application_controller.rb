@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
   helper_method :back, :redirect_setup
 
-  def back(default_path)    
-    redirect_path = Rails.cache.read("redirect_path")
-    id_arg = Rails.cache.read("from_id")
-    unless redirect_path.nil?
-      Rails.cache.delete("redirect_path")
+  def back(default_path)  
+    unless Rails.cache.read("redirect_path").nil?
+      redirect_path = Rails.cache.read("redirect_path")
+      id_arg = Rails.cache.read("from_id")
+      # Rails.cache.delete("redirect_path")
+      # puts "redirect_path is deleted in application controller"
       send(redirect_path, id_arg)
     else
       send default_path
@@ -19,6 +20,11 @@ class ApplicationController < ActionController::Base
       Rails.cache.write("redirect_path", redirect_path)
       Rails.cache.write("from_id", from_id)
     end
+  end
+
+  def clear_redirect
+    Rails.cache.delete("redirect_path")
+    Rails.cache.delete("from_id")
   end
 
 end

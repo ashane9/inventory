@@ -30,6 +30,55 @@
   <%= @item.upc %>
 </p>
 
+<% unless @item.purchase_id.nil? %>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapsePurchase" role="button" aria-expanded="false" aria-controls="collapsePurchase">
+      View Purchase Info
+    </a>
+    <div class="collapse" id="collapsePurchase">
+      <div class="card card-body">
+        
+          <% @purchase = Purchase.where(id: @item.purchase_id).first %>
+          <%= render 'purchases/info', object: @purchase %>
+        
+      </div>
+    </div>  
+  </div>
+<% end %>
+
+<% if Autograph.where(item_id: @item.id).count > 0 %>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseAutographs" role="button" aria-expanded="false" aria-controls="collapseAutographs">
+      View Autographs
+    </a>
+    <div class="collapse" id="collapseAutographs">
+      <div class="card card-body">
+        
+          <% Autograph.where(item_id: @item.id).each_with_index do |autograph,i| %>
+            <strong><%= i+1%>: <%= link_to autograph.name, autograph %></strong>
+          <% end %>
+      </div>
+    </div>  
+  </div>
+<% end %>
+
+<% unless @item.value_id.nil? %>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseValue" role="button" aria-expanded="false" aria-controls="collapseValue">
+      View Item Value
+    </a>
+    <div class="collapse" id="collapseValue">
+      <div class="card card-body">
+        
+          <% @value = Value.where(id: @item.value_id).first %>
+          <%= render 'values/info', object: @value %>
+        
+      </div>
+    </div>  
+  </div>
+<% end %>
+
+
 <p>
   <strong>Image:</strong>
   <%= image_tag @item.image, style: 'height:20%;width:20%;' if @item.image.attached? %>

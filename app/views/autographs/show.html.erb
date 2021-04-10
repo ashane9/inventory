@@ -8,7 +8,7 @@
 <p>
   <% AuthenticationsAutograph.where(autograph_id: @autograph.id).each do |authentication|%>
     <strong>Authentication:</strong>
-    <%= Authentication.where(id: authentication.authentication_id).name %>
+    <%= Authentication.where(id: authentication.authentication_id).first.name %>
     <p>
     <strong>Authentication number:</strong>
     <%= authentication.authentication_number %>
@@ -17,10 +17,67 @@
 </p>
 
 
+<% unless @autograph.purchase_id.nil? %>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapsePurchase" role="button" aria-expanded="false" aria-controls="collapsePurchase">
+      View Purchase Info
+    </a>
+    <div class="collapse" id="collapsePurchase">
+      <div class="card card-body">
+        
+          <% @purchase = Purchase.where(id: @autograph.purchase_id).first %>
+          <%= render 'purchases/info', object: @purchase %>
+        
+      </div>
+    </div>  
+  </div>
+<% end %>
+
+<% unless @autograph.value_id.nil? %>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseValue" role="button" aria-expanded="false" aria-controls="collapseValue">
+      View Item Value
+    </a>
+    <div class="collapse" id="collapseValue">
+      <div class="card card-body">
+        
+          <% @value = Value.where(id: @autograph.value_id).first %>
+          <%= render 'values/info', object: @value %>
+        
+      </div>
+    </div>  
+  </div>
+<% end %>
+
+<% unless @autograph.image.attached?%>
+  <div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseImageUpload" role="button" aria-expanded="false" aria-controls="collapseImageUpload">
+      Add Image
+    </a>
+    <div class="collapse" id="collapseImageUpload">
+      <div class="card card-body">         
+        <%= form_with(model: @autograph, local: true) do |form| %>
+          <div class="field">
+            <%= form.label :image %>
+            <%= form.file_field :image %>
+          </div>
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+        <% end %>  
+      </div>
+    </div>  
+  </div>
+<% else %>
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag @item.image, style: 'height:20%;width:20%;' if @item.image.attached? %>
+  </p>
+<% end %>
 
 
-<%= link_to 'Add Image', new_autograph_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>
 
+<br>
 <%= link_to 'Add Purchase Information', new_purchase_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>
 
 <%= link_to 'Add Item Value', new_value_path(from: 'autograph_path',from_id: @autograph.id), {class: "btn btn-primary btn-md"} %>

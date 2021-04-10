@@ -1,14 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Estimated value:</strong>
-  <%= @value.estimated_value %>
-</p>
-
-<p>
-  <strong>As of date:</strong>
-  <%= @value.as_of_date %>
-</p>
+<%= render 'info', value: @value %>
 
 <%= link_to 'Edit', edit_value_path(@value) %> |
 <%= link_to 'Back', back(:values_path) %>

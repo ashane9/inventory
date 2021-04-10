@@ -5,13 +5,17 @@ class ItemsController < ApplicationController
 
   # GET /items or /items.json
   def index        
+    clear_redirect
     @items = Item.all
   end
 
   # GET /items/1 or /items/1.json
   def show
     redirect_setup
-    # unless params[:from].nil?
+    # respond_to do |format|
+      
+    # end
+        # unless params[:from].nil?
       # @redirect_path = "#{params[:from]}" 
       # Rails.cache.write("redirect_path", "#{params[:from]}")
     # end
@@ -63,6 +67,7 @@ class ItemsController < ApplicationController
       if @item.save
         unless redirect_path.nil?
           Rails.cache.delete("redirect_path")
+          puts "redirect_path is deleted in items"
           format.html { redirect_to send redirect_path, notice: "Item was successfully created." }
         else
           format.html { redirect_to @item, notice: "Item was successfully created." }

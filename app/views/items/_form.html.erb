@@ -11,62 +11,51 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :item_name %>
-    <%= form.text_field :item_name %>
+  <div class="field form-group">
+    <%= form.label :item_name, class: "control-label"   %>
+    <%= form.text_field :item_name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="field form-group">
+    <%= form.label :description, class: "control-label" %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :item_type %>
+  <div class="field form-group">
+    <%= form.label :item_type, class: "control-label" %>
     <%= form.collection_select :item_type_id, ItemType.order(:type_name),:id,:type_name, {prompt: "Select Item Type", 
-    include_blank: 'Add New Item Type'}, {:onchange => "add_new_item_type()"} %>
+    include_blank: 'Add New Item Type'}, {class: "form-control", :onchange => "add_new_item_type()"} %>
   </div>
 
-
-  <div class="field" id="new_item_type" style="display:none">
+  <div class="field form-group" id="new_item_type" style="display:none">
     <%= fields_for @item_type do |item_type_form|%>
-      <%= item_type_form.label 'Enter Item Type' %>
-      <%= item_type_form.text_field :type_name %>
+      <%= item_type_form.label 'Enter Item Type', class: "control-label" %>
+      <%= item_type_form.text_field :type_name, class: "form-control" %>
     <% end %>
   </div>
    
-
-
-  <div class="field">
-    <%= form.label :manufacturer %>
-    <%= form.text_field :manufacturer %>
+  <div class="field form-group">
+    <%= form.label :manufacturer, class: "control-label" %>
+    <%= form.text_field :manufacturer, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :size %>
-    <%= form.text_field :size %>
+  <div class="field form-group">
+    <%= form.label :size, class: "control-label" %>
+    <%= form.text_field :size, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :upc %>
-    <%= form.text_field :upc %>
+  <div class="field form-group">
+    <%= form.label :upc, class: "control-label" %>
+    <%= form.text_field :upc, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image %>
+  <div class="field form-group">
+    <%= form.label :image, class: "control-label" %>
+    <%= form.file_field :image, class: "form-control" %>
   </div>
 
-<!--
-  <div class="field">
-    <%= form.label :purchaseid %>
-    <%= form.text_field :purchaseid %>
-  </div>
--->
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-group py-3">
+    <%= form.submit class: "form-control btn-dark" %>
   </div>
 
-  
-  
 <% end %>

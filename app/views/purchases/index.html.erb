@@ -2,27 +2,27 @@
 
 <h1>Purchases</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Invoice number</th>
-      <th>Purchase type</th>
-      <th>Location</th>
-      <th>Date</th>
-      <th>Source</th>
-      <th>Sale price</th>
-      <th>Buyer premium</th>
-      <th>Shipping</th>
-      <th>Total cost</th>
+      <th scope="col">Invoice Number</th>
+      <th scope="col">Purchase Type</th>
+      <th scope="col">Location</th>
+      <th scope="col">Date</th>
+      <th scope="col">Source</th>
+      <th scope="col">Sale Price</th>
+      <th scope="col">Buyer Premium</th>
+      <th scope="col">Shipping</th>
+      <th scope="col">Total Cost</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @purchases.each do |purchase| %>
-      <tr>
+      <tr scope="row">
         <td><%= purchase.invoice_number %></td>
-        <td><%= purchase.purchase_type %></td>
+        <td><%= PurchaseType.where(id: purchase.purchase_type.id).first.type_name %></td>
         <td><%= purchase.location %></td>
         <td><%= purchase.date %></td>
         <td><%= purchase.sale_price %></td>

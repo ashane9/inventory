@@ -2,18 +2,18 @@
 
 <h1>Values</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Estimated value</th>
-      <th>As of date</th>
+      <th scope="col">Estimated value</th>
+      <th scope="col">As of date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @values.each do |value| %>
-      <tr>
+      <tr scope="row">
         <td><%= value.estimated_value %></td>
         <td><%= value.as_of_date %></td>
         <td><%= link_to 'Show', value %></td>

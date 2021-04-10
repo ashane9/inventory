@@ -2,20 +2,30 @@
 
 <h1>Autographs</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Authentication</th>
-      <th>Authentication number</th>
+      <th scope="col">Name</th>
+      <th scope="col">Authentication</th>
+      <th scope="col">Authentication number</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @autographs.each do |autograph| %>
-      <tr>
+      <tr scope="row">
         <td><%= autograph.name %></td>
+        <td>
+          <% AuthenticationsAutograph.where(autograph_id: autograph.id).each do |auth|%>
+            <%= Authentication.where(id: auth.authentication_id).first.name %>
+          <% end %>
+        </td>
+        <td>
+          <% AuthenticationsAutograph.where(autograph_id: autograph.id).each do |auth|%>
+            <%= auth.authentication_number %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', autograph %></td>
         <td><%= link_to 'Edit', edit_autograph_path(autograph) %></td>
         <td><%= link_to 'Destroy', autograph, method: :delete, data: { confirm: 'Are you sure?' } %></td>
