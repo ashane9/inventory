@@ -4,6 +4,7 @@
     <title>Inventory</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name = "viewport" id = "viewport_device">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -21,7 +22,7 @@
           </button>      
       
         <div class="collapse navbar-collapse my-lg-2" id="navMenu">
-          <ul class="nav navbar-nav mx-auto">
+          <ul class="nav navbar-nav">
             <li class="nav-item">
               <%= link_to "Search", root_path, {class: "nav-link"}%>
             </li>
