@@ -1,0 +1,23 @@
+<% if Item.where(value_id: @value.id).count.eql? 1 %>
+  <p>
+    <strong>Item Name:</strong>
+    <%= Item.where(value_id: @value.id).first.item_name %>
+  </p>
+<% end %>
+
+<% if Autograph.where(value_id: @value.id).count.eql? 1 %>
+  <p>
+    <strong>Autograph Name:</strong>
+    <%= Autograph.where(value_id: @value.id).first.name %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Estimated value:</strong>
+  <%= @value.estimated_value %>
+</p>
+
+<p>
+  <strong>As of date:</strong>
+  <%= @value.as_of_date %>
+</p>

@@ -1,0 +1,39 @@
+<p>
+  <strong>Invoice number:</strong>
+  <%= @purchase.invoice_number %>
+</p>
+
+<p>
+  <strong>Purchase type:</strong>
+  <%= PurchaseType.where(id: @purchase.purchase_type.id).first.type_name %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @purchase.location %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @purchase.date %>
+</p>
+
+<p>
+  <strong>Sale price:</strong>
+  <%= number_to_currency(@purchase.sale_price) %>
+</p>
+
+<p>
+  <strong>Buyer premium:</strong>
+  <%= number_to_currency(@purchase.buyer_premium) %>
+</p>
+
+<p>
+  <strong>Shipping:</strong>
+  <%= number_to_currency(@purchase.shipping) %>
+</p>
+
+<p>
+  <strong>Total cost:</strong>
+  <%= number_to_currency(@purchase.total_cost) %>
+</p>
