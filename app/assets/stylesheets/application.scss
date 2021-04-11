@@ -21,6 +21,10 @@
   color: #343a40;
 }
 
+.navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+  // color: blue;
+  color: #FFFFFF80;
+}
 // /* Extra small devices (phones, 600px and down) */
 // @media (max-width: 300px) {
 //   .navbar-brand{

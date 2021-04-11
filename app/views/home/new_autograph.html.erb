@@ -1,9 +1,13 @@
-<div>
-  <h4>Is this autograph on a new item?</h3>
-  <div class="switch">	
-    <%= link_to 'Yes', new_item_path(from: 'new_autograph_path'), {class: "btn btn-primary btn-md"} %>
-    <%= link_to 'No', new_autograph_path, {class: "btn btn-primary btn-md"} %>    
+<div class="container-fluid h-100">
+  <div class="d-flex align-items-center flex-column h-100 my-5">
+    <div>
+      <h1 class="text-center">Is this autograph on a new item?</h1>
+      <div class="switch form-group py-3 text-center">	
+        <%= link_to 'Yes', new_item_path(from: 'new_autograph_path'), {class: "btn btn-lg btn-dark pr-4 pl-4 mr-5"} %>
+        <%= link_to 'No', new_autograph_path, {class: "btn btn-lg btn-dark pr-4 pl-4"} %>    
+      </div>
+    </div>
+
+    <%= link_to 'Cancel', root_path %>
   </div>
 </div>
-
-<%= link_to 'Cancel', root_path %>

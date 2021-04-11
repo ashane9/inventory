@@ -1,5 +1,17 @@
-<h1>New Item Type</h1>
+<div class="container-fluid h-100">
+  <div class="row align-items-center">
+    <div class="col-1">
+      <%= link_to back(:item_types_path), class: "flex-column align-items-start" do %>
+        <i class="fas fa-chevron-circle-left fa-3x"></i>
+      <% end %>
+    </div>
+    <div class="col-10 text-center pt-1">
+      <h1 class="display-4">New Item Type</h1>
+    </div>
+  </div>
 
-<%= render 'form', item_type: @item_type %>
-
-<%= link_to 'Back', item_types_path %>
+  <div class="d-flex align-items-center flex-column h-100 my-3">
+    <%= render 'form', item_type: @item_type %>
+    <%= link_to 'Cancel', root_path %>
+  </div>
+</div>

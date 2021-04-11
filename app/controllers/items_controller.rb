@@ -22,8 +22,32 @@ class ItemsController < ApplicationController
   end
 
   def search
-    q = params[:q].downcase
-    @items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
+    q = params[:term].downcase
+    puts q
+    items = Item.search_items(q)
+    puts items.as_json
+    test = items.map{|i| [i.item_name,i.description,i.id]}
+    test2 = items.map{|i| {name: i.item_name,description: i.description,id: i.id}}.to_json
+    test3 = items.map{|i| {label: i.item_name, value: i.item_name, description: i.description, id: i.id}}.to_json
+  
+    puts test3
+    # puts test.to_json
+
+    render json: test3
+    # render :json => items.map{ |i| "#{i.item_name}:<span style='font-size:smaller;color:red'>#{i.description}</span>:#{i.id}" }
+    # render json: test
+    # render json: items.map(&:item_name).uniq 
+    # if q.size > 0
+      # items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
+      # found = @items.present? ?  @items.map{|x| x["item_name"]} : @items
+      # found = items.map{|x| x["item_name"]}
+      # render :json => found
+    # else
+      # render :json => []
+    # end
+    # q = params[:q].downcase
+    # @items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
+    # render json: {items: @items}
   end
 
   # GET /items/new

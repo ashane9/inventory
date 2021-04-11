@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :type_name %>
-    <%= form.text_field :type_name %>
+  <div class="field form-group">
+    <%= form.label :type_name, class: "control-label" %>
+    <%= form.text_field :type_name, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-group py-3">
+    <%= form.submit class: "form-control btn-dark" %>
   </div>
 <% end %>

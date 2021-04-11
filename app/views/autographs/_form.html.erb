@@ -14,38 +14,38 @@
 <br>
 <%= render 'items/item_lookup'%>
 <br>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="field form-group">
+    <%= form.label :name, class: "control-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :authentication %>
+  <div class="field form-group">
+    <%= form.label :authentication, class: "control-label" %>
     <%= form.collection_select :authentication_id, Authentication.order(:name),:id,:name, {prompt: "Select Authentication", 
-    include_blank: 'Add New Authentication'}, {:onchange => "add_new_authentication()"} %>
+    include_blank: 'Add New Authentication'}, {class: "form-control", :onchange => "add_new_authentication()"} %>
   </div>
 
-  <div class="field" id="new_authentication" style="display:none">
+  <div class="field form-group" id="new_authentication" style="display:none">
     <%= fields_for @authentication do |authentication_form|%>
-      <%= authentication_form.label 'Enter Authentication' %>
-      <%= authentication_form.text_field :name %>
+      <%= authentication_form.label 'Enter Authentication', class: "control-label" %>
+      <%= authentication_form.text_field :name, class: "form-control" %>
     <% end %>
   </div>
 
-  <div class="field">  
+  <div class="field form-group">  
     <%= fields_for @autograph_authentication do |auto_auth_form|%>
-      <%= auto_auth_form.label :authentication_number %>
-      <%= auto_auth_form.text_field :authentication_number %>
+      <%= auto_auth_form.label :authentication_number, class: "control-label" %>
+      <%= auto_auth_form.text_field :authentication_number, class: "form-control" %>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image %>
+  <div class="field form-group">
+    <%= form.label :image, class: "control-label" %>
+    <%= form.file_field :image, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-group py-3">
+    <%= form.submit class: "form-control btn-dark" %>
   </div>
 
   

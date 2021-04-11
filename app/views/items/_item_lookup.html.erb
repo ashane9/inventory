@@ -1,19 +1,21 @@
-<h4>Lookup Item</h4>
-<div>
+
+<!--<div>
   <input type="search" id="item-search" placeholder="Enter name..." data-behavior="autocomplete">
 </div>
-<br>
+-->
+<div class="field form-group">
+  <label class="control-label">Lookup Item</label>
+  <input type="search" id="item-search" placeholder="Search for item..." autocomplete="off" class= "form-control" >
+</div>
 
 <div id="item-search-result" style="display:none">
   <div class="row">
-    <div class="col-sm-1">Item Id:</div>
-    <div class="col-sm-2">Item Name:</div>
-    <div class="col-sm-4">Item Description:</div>
-</div>
+    <strong class="col">Item Name:</strong>
+    <div id="result-name" class="col"></div>
+  </div>
+  <br>
   <div class="row">
-    <div id="result-id" class="col-sm-1"></div>
-    <div id="result-name" class="col-sm-2"></div>
-    <div id="result-desc" class="col-sm-4"></div>
+    <strong class="col">Item Description:</strong>
+    <div id="result-desc" class="col"></div>
+  </div>
 </div>
-</div>
-<br>

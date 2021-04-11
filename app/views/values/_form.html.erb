@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :estimated_value %>
-    <%= form.text_field :estimated_value %>
+  <div class="field form-group">
+    <%= form.label :estimated_value, class: "control-label" %>
+    <%= form.text_field :estimated_value, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :as_of_date %>
-    <%= form.date_select :as_of_date %>
+  <div class="field form-group">
+    <%= form.label :as_of_date, class: "control-label" %>
+    <%= form.date_select :as_of_date, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-group py-3">
+    <%= form.submit class: "form-control btn-dark" %>
   </div>
 <% end %>

@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+     </head>
 
   <body class="h-100 bg-light">
 
@@ -42,12 +43,12 @@
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                 Manage
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to "Item Types", item_types_path, {class: "dropdown-item nav-link"}%>
-                <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link"}%>
-                <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link"}%>
-                <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link"}%>
-                <%= link_to "Values", values_path, {class: "dropdown-item nav-link"}%>
+              <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                <%= link_to "Item Types", item_types_path, {class: "dropdown-item nav-link ml-2"}%>
+                <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link ml-2"}%>
+                <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link ml-2"}%>
+                <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link ml-2"}%>
+                <%= link_to "Values", values_path, {class: "dropdown-item nav-link ml-2"}%>
               </div>
             </li>
           </ul>

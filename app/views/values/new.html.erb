@@ -1,7 +1,17 @@
-<h1>New Value</h1>
+<div class="container-fluid h-100">
+  <div class="row align-items-center">
+    <div class="col-1">
+      <%= link_to back(:values_path), class: "flex-column align-items-start" do %>
+        <i class="fas fa-chevron-circle-left fa-3x"></i>
+      <% end %>
+    </div>
+    <div class="col-10 text-center pt-1">
+      <h1 class="display-4">New Value</h1>
+    </div>
+  </div>
 
-<%= render 'form', value: @value %>
-
-<%= link_to 'Back', back(:values_path) %>
-
-<%= link_to 'Cancel', root_path %>
+  <div class="d-flex align-items-center flex-column h-100 my-3">
+    <%= render 'form', value: @value %>
+    <%= link_to 'Cancel', root_path %>
+  </div>
+</div>

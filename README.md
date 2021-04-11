@@ -30,3 +30,5 @@ yarn add popper.js
 yarn add flatpickr
 yarn add easy-autocomplete
 yarn add @fortawesome/fontawesome-free
+yarn add js-autocomplete  -not sure if this is needed
+yarn add jquery-ui-dist
