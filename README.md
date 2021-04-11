@@ -37,4 +37,4 @@ yarn add jquery-ui-dist
 credentials.yml:
 
 SET EDITOR=C:\WINDOWS\system32\notepad
-rails credentials:edit
+rails credentials:edit --environment production
