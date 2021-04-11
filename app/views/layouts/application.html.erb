@@ -17,7 +17,7 @@
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         
-          <%= link_to "Andrew's Collectibles", root_path, {class: "navbar-brand"}%>
+          <%= link_to header_name, root_path, {class: "navbar-brand"}%>
           <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navMenu" aria-expanded="false" aria-controls="navMenu">
             <span class="navbar-toggler-icon"></span>                   
           </button>      
@@ -48,9 +48,17 @@
                 <%= link_to "Authentications", authentications_path, {class: "dropdown-item nav-link ml-2"}%>
                 <%= link_to "Purchase Types", purchase_types_path, {class: "dropdown-item nav-link ml-2"}%>
                 <%= link_to "Purchases", purchases_path, {class: "dropdown-item nav-link ml-2"}%>
-                <%= link_to "Values", values_path, {class: "dropdown-item nav-link ml-2"}%>
+                <%= link_to "Values", values_path, {class: "dropdown-item nav-link ml-2"}%>                
+                <% if session_active? %>
+                  <%= link_to "User", '/dashboard', {class: "dropdown-item nav-link ml-2"}%>
+                <% end %>
               </div>
             </li>
+            <% if session_active? %>
+              <li class="nav-item">
+                <%= link_to 'Logout', '/auth/logout', {method: :get, class: "nav-link"} %>
+              </li>
+            <% end %>
           </ul>
         </div>
     </nav>

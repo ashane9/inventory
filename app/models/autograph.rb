@@ -4,4 +4,8 @@ class Autograph < ApplicationRecord
   belongs_to :purchase, optional: true
   has_and_belongs_to_many :authentication, optional: true
   validates :name, :presence => true
+
+  def self.count(owner)
+    where(owned_by: owner).count
+  end
 end

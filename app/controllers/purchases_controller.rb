@@ -1,11 +1,12 @@
 class PurchasesController < ApplicationController
+  include Secured
   before_action :set_purchase, only: %i[ show edit update destroy ]
   helper_method :add_purchase_id
 
   # GET /purchases or /purchases.json
   def index
     clear_redirect
-    @purchases = Purchase.all
+    @purchases = Purchase.where(owned_by: user).all
   end
 
   def return_value_of_symbol(obj,sym)
@@ -32,9 +33,9 @@ class PurchasesController < ApplicationController
     Rails.cache.delete("from_id")
     if @from_id != ''
       if @redirect_path.include? 'item'
-        Item.where(id: @from_id).update({purchase_id: purchase_id})
+        Item.where(id: @from_id, owned_by: user).update({purchase_id: purchase_id})
       elsif @redirect_path.include? 'autograph'
-        Autograph.where(id: @from_id).update({purchase_id: purchase_id})
+        Autograph.where(id: @from_id, owned_by: user).update({purchase_id: purchase_id})
       end
     end
   end
@@ -51,7 +52,7 @@ class PurchasesController < ApplicationController
       @purchase_type_id = params[:purchase][:purchase_type_id]
     end
     
-    @purchase = Purchase.new(purchase_params.merge!({purchase_type_id: @purchase_type_id}))
+    @purchase = Purchase.new(purchase_params.merge!({purchase_type_id: @purchase_type_id, owned_by: user}))
     
     respond_to do |format|
       if @purchase.save
@@ -101,7 +102,7 @@ class PurchasesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
-      @purchase = Purchase.find(params[:id])
+      @purchase = Purchase.where(owned_by: user).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

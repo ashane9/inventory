@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  include Secured
   before_action :force_json, only: :search
   before_action :set_item, only: %i[ show edit update destroy ]
   helper_method :add_new_item_type
@@ -6,7 +7,7 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
   def index        
     clear_redirect
-    @items = Item.all
+    @items = Item.where(owned_by: user).all
   end
 
   # GET /items/1 or /items/1.json
@@ -24,7 +25,7 @@ class ItemsController < ApplicationController
   def search
     q = params[:term].downcase
     puts q
-    items = Item.search_items(q)
+    items = Item.where(owned_by: user).search_items(q)
     puts items.as_json
     test = items.map{|i| [i.item_name,i.description,i.id]}
     test2 = items.map{|i| {name: i.item_name,description: i.description,id: i.id}}.to_json
@@ -85,7 +86,7 @@ class ItemsController < ApplicationController
       @item_type_id = params[:item][:item_type_id]
     end
     # @item = Item.new(item_params.merge!({item_type_id: ItemType.where(type_name: params[:type_name]).first.id}))
-    @item = Item.new(item_params.merge!({item_type_id: @item_type_id}))
+    @item = Item.new(item_params.merge!({item_type_id: @item_type_id, owned_by: user}))
 
     respond_to do |format|
       if @item.save
@@ -129,7 +130,7 @@ class ItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = Item.find(params[:id])
+      @item = Item.where(owned_by: user).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

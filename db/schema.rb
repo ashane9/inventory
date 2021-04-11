@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_225945) do
+ActiveRecord::Schema.define(version: 2021_04_11_210155) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.string "authentication_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "owned_by"
   end
 
   create_table "autographs", force: :cascade do |t|
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.bigint "value_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "owned_by"
     t.index ["item_id"], name: "index_autographs_on_item_id"
     t.index ["purchase_id"], name: "index_autographs_on_purchase_id"
     t.index ["value_id"], name: "index_autographs_on_value_id"
@@ -89,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.bigint "value_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "owned_by"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
     t.index ["purchase_id"], name: "index_items_on_purchase_id"
     t.index ["value_id"], name: "index_items_on_value_id"
@@ -111,6 +114,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.decimal "total_cost", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "owned_by"
     t.index ["purchase_type_id"], name: "index_purchases_on_purchase_type_id"
   end
 
@@ -119,6 +123,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_225945) do
     t.date "as_of_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "owned_by"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

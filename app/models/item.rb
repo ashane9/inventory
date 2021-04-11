@@ -10,4 +10,8 @@ class Item < ApplicationRecord
   def self.search_items(term)
     where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{term}%", "%#{term}%").limit(5)
   end
+
+  def self.count(owner)
+    where(owned_by: owner).count
+  end
 end

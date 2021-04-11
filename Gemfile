@@ -10,6 +10,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
+gem 'omniauth-auth0', '~> 2.5'
+gem 'omniauth-rails_csrf_protection', '~> 0.1' 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.3'
 # Use Puma as the app server

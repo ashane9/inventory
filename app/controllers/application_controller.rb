@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :back, :redirect_setup
+  helper_method :back, :redirect_setup, :header_name, :session_active?, :user
 
   def back(default_path)  
     unless Rails.cache.read("redirect_path").nil?
@@ -25,6 +25,24 @@ class ApplicationController < ActionController::Base
   def clear_redirect
     Rails.cache.delete("redirect_path")
     Rails.cache.delete("from_id")
+  end
+
+  private
+
+  def header_name
+    if session[:userinfo]
+      "#{session[:userinfo]['given_name']}'s Collection"
+    else
+      "Your Collection"
+    end
+  end
+
+  def session_active?
+    session[:userinfo]
+  end
+
+  def user
+    session[:userinfo]['name']
   end
 
 end

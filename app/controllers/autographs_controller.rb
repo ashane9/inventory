@@ -1,10 +1,11 @@
 class AutographsController < ApplicationController
+  include Secured
   before_action :set_autograph, only: %i[ show edit update destroy ]
 
   # GET /autographs or /autographs.json
   def index
     clear_redirect
-    @autographs = Autograph.all
+    @autographs = Autograph.where(owned_by: user).all
   end
 
   def get_item
@@ -47,7 +48,7 @@ class AutographsController < ApplicationController
     Rails.cache.delete("item_id")
 
     puts "item_id is deleted in autographs"
-    @autograph = Autograph.new(autograph_params.merge!({item_id: item_id }))
+    @autograph = Autograph.new(autograph_params.merge!({item_id: item_id, owned_by: user }))
 
     respond_to do |format|
       if @autograph.save
@@ -63,7 +64,8 @@ class AutographsController < ApplicationController
         unless authentication_id.nil?
           merged_params = autograph_authentication_params.merge!({autograph_id: @autograph.id, 
           authentication_id: authentication_id, 
-          authentication_number: params[:authentication_number]})
+          authentication_number: params[:authentication_number],
+          owned_by: user})
           autograph_authentication = AuthenticationsAutograph.new(merged_params)
           autograph_authentication.save
         end
@@ -115,7 +117,7 @@ class AutographsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_autograph
-      @autograph = Autograph.find(params[:id])
+      @autograph = Autograph.where(owned_by: user).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

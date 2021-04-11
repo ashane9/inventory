@@ -1,3 +1,26 @@
-<!--<h1>Andrew's Collectibles</h1>  -->
+<div class="container-fluid h-100">
+  <div class="d-flex align-items-center flex-column h-100 my-3">
+    <% if session_active? %>      
+      <h1 class="text-center my-5">Welcome, <%= @user['name'] %></h1>
 
+      <div>
+        <h5>Number of Items: </h5>
+        <p class="text-center">
+          <%= Item.count(@user['name']) %>
+        </p>
+      </div>
+      <div>
+        <h5>Number of Autographs: </h5>
+        <p class="text-center">
+          <%= Autograph.count(@user['name']) %>
+        </p>
+      </div>
 
+    <% else %>
+      <h1 class="text-center my-5">Login To View Your Collection</h1>
+      <div class="actions form-group my-3">
+        <%= button_to 'Login', 'auth/auth0', {method: :post, class: "btn btn-lg btn-dark pr-4 pl-4s"} %>
+      </div>
+    <% end %>
+  </div>
+</div>

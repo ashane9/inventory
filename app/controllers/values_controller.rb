@@ -1,10 +1,11 @@
 class ValuesController < ApplicationController
+  include Secured
   before_action :set_value, only: %i[ show edit update destroy ]
 
   # GET /values or /values.json
   def index
     clear_redirect
-    @values = Value.all
+    @values = Value.where(owned_by: user).all
   end
 
   # GET /values/1 or /values/1.json
@@ -26,9 +27,9 @@ class ValuesController < ApplicationController
     Rails.cache.delete("from_id")
     if @from_id != ''
       if @redirect_path.include? 'item'
-        Item.where(id: @from_id).update({value_id: value_id})
+        Item.where(id: @from_id, owned_by: user).update({value_id: value_id})
       elsif @redirect_path.include? 'autograph'
-        Autograph.where(id: @from_id).update({value_id: value_id})
+        Autograph.where(id: @from_id, owned_by: user).update({value_id: value_id})
       end
     end
   end
@@ -37,7 +38,7 @@ class ValuesController < ApplicationController
   def create
     @redirect_path = Rails.cache.read("redirect_path")
     
-    @value = Value.new(value_params)
+    @value = Value.new(value_params.merge!({owned_by: user})
 
     respond_to do |format|
       if @value.save
@@ -87,7 +88,7 @@ class ValuesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_value
-      @value = Value.find(params[:id])
+      @value = Value.where(owned_by: user).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

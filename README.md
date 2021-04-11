@@ -32,3 +32,9 @@ yarn add easy-autocomplete
 yarn add @fortawesome/fontawesome-free
 yarn add js-autocomplete  -not sure if this is needed
 yarn add jquery-ui-dist
+
+
+credentials.yml:
+
+SET EDITOR=C:\WINDOWS\system32\notepad
+rails credentials:edit
