@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   belongs_to :purchase, optional: true
   has_one_attached :image
 
-  validates :name, :presence => true
+  validates :item_name, :presence => true
 
   def self.search_items(term)
     where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{term}%", "%#{term}%").limit(5)
