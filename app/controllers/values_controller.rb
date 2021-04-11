@@ -38,7 +38,7 @@ class ValuesController < ApplicationController
   def create
     @redirect_path = Rails.cache.read("redirect_path")
     
-    @value = Value.new(value_params.merge!({owned_by: user})
+    @value = Value.new(value_params.merge!({owned_by: user}))
 
     respond_to do |format|
       if @value.save
