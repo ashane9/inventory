@@ -77,7 +77,6 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     redirect_path = Rails.cache.read("redirect_path")
-    puts "WHAT IS TYPENAME: #{params[:type_name]}"
     if params[:type_name] != ''
       @item_type = ItemType.new(item_type_params)
       @item_type.save

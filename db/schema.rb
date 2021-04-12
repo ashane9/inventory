@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_11_210155) do
+ActiveRecord::Schema.define(version: 2021_04_12_020120) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -57,13 +57,18 @@ ActiveRecord::Schema.define(version: 2021_04_11_210155) do
 
   create_table "autographs", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "item_id", null: false
-    t.bigint "purchase_id"
-    t.bigint "value_id"
+    t.integer "item_id", null: false
+    t.integer "purchase_id"
+    t.integer "value_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "owned_by"
+    t.text "description"
+    t.integer "profession_id"
+    t.integer "organization_id"
     t.index ["item_id"], name: "index_autographs_on_item_id"
+    t.index ["organization_id"], name: "index_autographs_on_organization_id"
+    t.index ["profession_id"], name: "index_autographs_on_profession_id"
     t.index ["purchase_id"], name: "index_autographs_on_purchase_id"
     t.index ["value_id"], name: "index_autographs_on_value_id"
   end
@@ -95,6 +100,18 @@ ActiveRecord::Schema.define(version: 2021_04_11_210155) do
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
     t.index ["purchase_id"], name: "index_items_on_purchase_id"
     t.index ["value_id"], name: "index_items_on_value_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "org_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "professions", force: :cascade do |t|
+    t.string "profession_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "purchase_types", force: :cascade do |t|

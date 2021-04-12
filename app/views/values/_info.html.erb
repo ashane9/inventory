@@ -1,14 +1,14 @@
-<% if Item.where(value_id: @value.id).count.eql? 1 %>
+<% if Item.where(value_id: @value.id, owned_by: user).count.eql? 1 %>
   <p>
     <strong>Item Name:</strong>
-    <%= Item.where(value_id: @value.id).first.item_name %>
+    <%= Item.where(value_id: @value.id, owned_by: user).first.item_name %>
   </p>
 <% end %>
 
-<% if Autograph.where(value_id: @value.id).count.eql? 1 %>
+<% if Autograph.where(value_id: @value.id, owned_by: user).count.eql? 1 %>
   <p>
     <strong>Autograph Name:</strong>
-    <%= Autograph.where(value_id: @value.id).first.name %>
+    <%= Autograph.where(value_id: @value.id, owned_by: user).first.name %>
   </p>
 <% end %>
 

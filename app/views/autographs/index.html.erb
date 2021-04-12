@@ -17,12 +17,12 @@
       <tr scope="row">
         <td><%= autograph.name %></td>
         <td>
-          <% AuthenticationsAutograph.where(autograph_id: autograph.id).each do |auth|%>
+          <% AuthenticationsAutograph.where(autograph_id: autograph.id, owned_by: user).each do |auth|%>
             <%= Authentication.where(id: auth.authentication_id).first.name %>
           <% end %>
         </td>
         <td>
-          <% AuthenticationsAutograph.where(autograph_id: autograph.id).each do |auth|%>
+          <% AuthenticationsAutograph.where(autograph_id: autograph.id, owned_by: user).each do |auth|%>
             <%= auth.authentication_number %>
           <% end %>
         </td>

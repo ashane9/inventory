@@ -20,6 +20,32 @@
   </div>
 
   <div class="field form-group">
+    <%= form.label :profession, class: "control-label" %>
+    <%= form.collection_select :profession_id, Profession.order(:profession_name),:id,:profession_name, {prompt: "Select Profession", 
+    include_blank: 'Add New Profession'}, {class: "form-control", :onchange => "add_new_profession()"} %>
+  </div>
+
+  <div class="field form-group" id="new_profession" style="display:none">
+    <%= fields_for @profession do |profession_form|%>
+      <%= profession_form.label 'Enter Profession', class: "control-label" %>
+      <%= profession_form.text_field :profession_name, class: "form-control" %>
+    <% end %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :organization, class: "control-label" %>
+    <%= form.collection_select :organization_id, Organization.order(:org_name),:id,:org_name, {prompt: "Select Organization", 
+    include_blank: 'Add New Organization'}, {class: "form-control", :onchange => "add_new_organization()"} %>
+  </div>
+
+  <div class="field form-group" id="new_organization" style="display:none">
+    <%= fields_for @organization do |organization_form|%>
+      <%= organization_form.label 'Enter Organization', class: "control-label" %>
+      <%= organization_form.text_field :org_name, class: "form-control" %>
+    <% end %>
+  </div>
+
+  <div class="field form-group">
     <%= form.label :authentication, class: "control-label" %>
     <%= form.collection_select :authentication_id, Authentication.order(:name),:id,:name, {prompt: "Select Authentication", 
     include_blank: 'Add New Authentication'}, {class: "form-control", :onchange => "add_new_authentication()"} %>

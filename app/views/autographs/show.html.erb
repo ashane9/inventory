@@ -6,7 +6,7 @@
 </p>
 
 <p>
-  <% AuthenticationsAutograph.where(autograph_id: @autograph.id).each do |authentication|%>
+  <% AuthenticationsAutograph.where(autograph_id: @autograph.id, owned_by: user).each do |authentication|%>
     <strong>Authentication:</strong>
     <%= Authentication.where(id: authentication.authentication_id).first.name %>
     <p>
@@ -25,7 +25,7 @@
     <div class="collapse" id="collapsePurchase">
       <div class="card card-body">
         
-          <% @purchase = Purchase.where(id: @autograph.purchase_id).first %>
+          <% @purchase = Purchase.where(id: @autograph.purchase_id, owned_by: user).first %>
           <%= render 'purchases/info', object: @purchase %>
         
       </div>
@@ -41,7 +41,7 @@
     <div class="collapse" id="collapseValue">
       <div class="card card-body">
         
-          <% @value = Value.where(id: @autograph.value_id).first %>
+          <% @value = Value.where(id: @autograph.value_id, owned_by: user).first %>
           <%= render 'values/info', object: @value %>
         
       </div>

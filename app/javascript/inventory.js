@@ -35,6 +35,23 @@ add_new_authentication = function () {
   }
 };
 
+add_new_profession = function () {
+  if ($("#autograph_profession_id option:selected").text() == "Add New Profession") {
+    $("#new_profession").show();
+  } else {
+    console.log($("#autograph_profession_id option:selected").text());
+    $("#new_profession").hide();
+  }
+};
+
+add_new_organization = function () {
+  if ($("#autograph_organization_id option:selected").text() == "Add New Organization") {
+    $("#new_organization").show();
+  } else {
+    console.log($("#autograph_organization_id option:selected").text());
+    $("#new_organization").hide();
+  }
+};
 
 $("#purchase_date").flatpickr(); // jQuery
 

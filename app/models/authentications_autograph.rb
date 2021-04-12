@@ -1,3 +1,2 @@
 class AuthenticationsAutograph < ApplicationRecord
-
 end

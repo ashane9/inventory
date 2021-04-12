@@ -1,0 +1,6 @@
+Pass Item ID from show page, when add autograph/purchase/value button is clicked
+Pass Autograph ID from show page, when add purchase/value button is clicked
+
+
+
+

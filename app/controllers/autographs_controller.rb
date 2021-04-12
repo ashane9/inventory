@@ -46,9 +46,25 @@ class AutographsController < ApplicationController
     item_id = Rails.cache.read("item_id")
     authentication_id = nil
     Rails.cache.delete("item_id")
+    
+    if params[:profession_name] != ''
+      @profession = Profession.new(profession_params)
+      @profession.save
+      @profession_id = Profession.where(profession_name: @profession.profession_name).first.id
+    else
+      @profession_id = params[:autograph][:profession_id]
+    end
+    if params[:org_name] != ''
+      @organization = Organization.new(organization_params)
+      @organization.save
+      @organization_id = Organization.where(org_name: @organization.org_name).first.id
+    else
+      @organization_id = params[:autograph][:organization_id]
+    end
 
-    puts "item_id is deleted in autographs"
-    @autograph = Autograph.new(autograph_params.merge!({item_id: item_id, owned_by: user }))
+
+    @autograph = Autograph.new(autograph_params.merge!({item_id: item_id, 
+      profession_id: @profession_id, organization_id: @organization_id, owned_by: user }))
 
     respond_to do |format|
       if @autograph.save
@@ -122,7 +138,7 @@ class AutographsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def autograph_params
-      params.require(:autograph).permit(:name, :item_id)
+      params.require(:autograph).permit(:name, :item_id, :profession_id, :organization_id)
     end
     
     def authentication_params
@@ -131,5 +147,13 @@ class AutographsController < ApplicationController
 
     def autograph_authentication_params
       params.permit(:authentication_number)
+    end
+
+    def profession_params
+      params.permit(:profession_name)
+    end
+
+    def organization_params
+      params.permit(:org_name)
     end
 end
