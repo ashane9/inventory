@@ -1,94 +1,140 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Item Name:</strong>
-  <%= @item.item_name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @item.description %>
-</p>
-
-<p>
-  <strong>Item Type:</strong>
-  <%= ItemType.where(id: @item.item_type.id).first.type_name %>
-</p>
-
-<p>
-  <strong>Manufacturer:</strong>
-  <%= @item.manufacturer %>
-</p>
-
-<p>
-  <strong>Size:</strong>
-  <%= @item.size %>
-</p>
-
-<p>
-  <strong>Upc:</strong>
-  <%= @item.upc %>
-</p>
-
-<% unless @item.purchase_id.nil? %>
-  <div>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapsePurchase" role="button" aria-expanded="false" aria-controls="collapsePurchase">
-      View Purchase Info
-    </a>
-    <div class="collapse" id="collapsePurchase">
-      <div class="card card-body">
-        
-          <% @purchase = Purchase.where(id: @item.purchase_id, owned_by: user).first %>
-          <%= render 'purchases/info', object: @purchase %>
-        
+  <div class="container-fluid">
+    <div class="row align-items-center my-3">
+      <div class="col-1">
+        <%= link_to back(:items_path), class: "flex-column align-items-start" do %>
+          <i class="fas fa-chevron-circle-left fa-3x"></i>
+        <% end %>
       </div>
-    </div>  
-  </div>
-<% end %>
-
-<% if Autograph.where(item_id: @item.id, owned_by: user).count > 0 %>
-  <div>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseAutographs" role="button" aria-expanded="false" aria-controls="collapseAutographs">
-      View Autographs
-    </a>
-    <div class="collapse" id="collapseAutographs">
-      <div class="card card-body">
-        
-          <% Autograph.where(item_id: @item.id, owned_by: user).each_with_index do |autograph,i| %>
-            <strong><%= i+1%>: <%= link_to autograph.name, autograph %></strong>
-          <% end %>
+      <div class="col-10 text-center pt-1">
+        <h1 class="display-4"><%= @item.item_name %></h1>
       </div>
-    </div>  
-  </div>
-<% end %>
-
-<% unless @item.value_id.nil? %>
-  <div>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseValue" role="button" aria-expanded="false" aria-controls="collapseValue">
-      View Item Value
-    </a>
-    <div class="collapse" id="collapseValue">
-      <div class="card card-body">
-        
-          <% @value = Value.where(id: @item.value_id, owned_by: user).first %>
-          <%= render 'values/info', object: @value %>
-        
+      <div class="col-1">
+        <%= link_to edit_item_path(@item), class: "d-flex align-items-center justify-content-around" do %>
+          <i class="fas fa-edit fa-2x mr-2"></i>
+        <% end %>
       </div>
-    </div>  
+    </div>
+  <div class="container">
+    <div class="team-single py-3">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 text-center">
+          <div class="team-single-img">
+            <%= image_tag @item.image, style: 'height:80%;width:80%;' if @item.image.attached? %>
+          </div>
+          <div class="bg-light-gray py-4">
+            <h4>Description</h4>
+            <p class="sm-width-95 sm-margin-auto"><%= @item.description %></p>                    
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-5">
+          <div class="team-single-text">
+            <h4 class="col-lg-10 col-md-9 text-center">Details</h4>
+            <div class="">
+                <ul class="mx-3">
+                    <li>
+                      <div class="row">
+                        <div class="col-5">
+                          <strong>Item Type:</strong>
+                        </div>
+                        <div class="col-5 text-center">
+                          <p><%= ItemType.where(id: @item.item_type.id).first.type_name %></p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="row">
+                        <div class="col-5">
+                          <strong>Manufacturer:</strong>
+                        </div>
+                        <div class="col-5 text-center">
+                          <p><%= @item.manufacturer %></p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="row">
+                        <div class="col-5">
+                          <strong>Size:</strong>
+                        </div>
+                        <div class="col-5 text-center">
+                          <p><%= @item.size %></p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="row">
+                        <div class="col-5">
+                          <strong>UPC:</strong>
+                        </div>                            
+                        <div class="col-5 text-center">
+                          <p><%= @item.upc %></p>
+                        </div>
+                      </div>
+                    </li> 
+                </ul>
+            </div>
+          </div>
+          <div class="row">
+            
+            <% unless @item.purchase_id.nil? %>
+              <div class="col-lg-4 col-md-6 text-center py-2">
+                <a class="btn btn-block btn-secondary" data-toggle="collapse" href="#collapsePurchase" role="button" aria-expanded="false" aria-controls="collapsePurchase">
+                  View Purchase Info
+                </a>
+                <div class="collapse" id="collapsePurchase">
+                  <div class="card card-body text-left">                      
+                    <% @purchase = Purchase.where(id: @item.purchase_id, owned_by: user).first %>
+                    <%= render 'purchases/info', object: @purchase %>                      
+                  </div>
+                </div>  
+              </div>
+            <% end %>
+
+            <% if Autograph.where(item_id: @item.id, owned_by: user).count > 0 %>
+              <div class="col-lg-4 col-md-6 text-center py-2">
+                <a class="btn btn-block btn-secondary" data-toggle="collapse" href="#collapseAutographs" role="button" aria-expanded="false" aria-controls="collapseAutographs">
+                  View Autographs
+                </a>
+                <div class="collapse" id="collapseAutographs">
+                  <div class="card card-body text-left">
+                    
+                      <% Autograph.where(item_id: @item.id, owned_by: user).each_with_index do |autograph,i| %>
+                        <strong><%= i+1%>: <%= link_to autograph.name, autograph %></strong>
+                      <% end %>
+                  </div>
+                </div>  
+              </div>
+            <% end %>
+
+            <% unless @item.value_id.nil? %>
+              <div class="col-lg-4 col-md-6 text-center py-2">
+                <a class="btn btn-block btn-secondary" data-toggle="collapse" href="#collapseValue" role="button" aria-expanded="false" aria-controls="collapseValue">
+                  View Item Value
+                </a>
+                <div class="collapse" id="collapseValue">
+                  <div class="card card-body text-left">
+                    
+                      <% @value = Value.where(id: @item.value_id, owned_by: user).first %>
+                      <%= render 'values/info', object: @value %>
+                    
+                  </div>
+                </div>  
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="col-4 text-center py-2">
+          <%= link_to 'Add Purchase Information', new_purchase_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-1"} %>
+        </div>
+        <div class="col-4 text-center py-2">
+          <%= link_to 'Add Autograph', new_autograph_path(from: "item_path",from_id: @item.id), {class: "btn btn-block btn-dark"} %>
+        </div>
+        <div class="col-4 text-center py-2">
+          <%= link_to 'Add Item Value', new_value_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-1"} %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
-
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @item.image, style: 'height:20%;width:20%;' if @item.image.attached? %>
-</p>
-
-<%= link_to 'Add Purchase Information', new_purchase_path(from: 'item_path',from_id: @item.id), {class: "btn btn-primary btn-md"} %>
-
-<%= link_to 'Add Autograph', new_autograph_path(from: "item_path",from_id: @item.id), {class: "btn btn-primary btn-md"} %>
-
-<%= link_to 'Add Item Value', new_value_path(from: 'item_path',from_id: @item.id), {class: "btn btn-primary btn-md"} %>
-<br>
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', back(:items_path) %>
+  </div>
