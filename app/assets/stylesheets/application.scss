@@ -33,6 +33,10 @@
   color: #FFFFFF80;
 }
 
+.text-responsive {
+  font-size: calc(100% + 1vw + 1vh);
+}
+
 // /* Extra small devices (phones, 600px and down) */
 // @media (max-width: 300px) {
 //   .navbar-brand{

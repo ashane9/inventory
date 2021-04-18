@@ -1,44 +1,49 @@
-<div class="container-fluid h-100">
+<div class="container-fluid h-100 px-0">
   <h1 class="text-center display-4 align-items-center pt-1">Purchases</h1>
 
   <br>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Piece</th>
         <th scope="col">Purchase Type</th>
         <th scope="col">Date</th>
         <th scope="col">Total Cost</th>
-        <th colspan="2"></th>
+        <th colspan="1"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @purchases.each_with_index do |purchase,i| %>
         <tr scope="row">          
-          <td><%= i+1 %>: </td>
-          <td>
-            <% item = Item.where(purchase_id: purchase.id).first %>
-            <% autograph = Autograph.where(purchase_id: purchase.id).first %>
-            <% if item %>
-              <%= link_to item.item_name, purchase %>
-            <% elsif autograph %>
-              <%= link_to autograph.name, purchase %>
-            <% end %>
+          <td class="px-1">
+            <div class="row">
+              <span class="col-1">
+                <%= i+1 %>: 
+              </span>
+              <span class="col">
+                <% item = Item.where(purchase_id: purchase.id).first %>
+                <% autograph = Autograph.where(purchase_id: purchase.id).first %>
+                <% if item %>
+                  <%= link_to item.item_name, purchase %>
+                <% elsif autograph %>
+                  <%= link_to autograph.name, purchase %>
+                <% end %>
+              </span>
+            </div>
           </td>
           <td><%= PurchaseType.where(id: purchase.purchase_type.id).first.type_name %></td>
           <td><%= purchase.date %></td>
-          <td><%= purchase.total_cost %></td>
+          <td><%= number_to_currency(purchase.total_cost) %></td>
           <td>
-            <%= link_to edit_purchase_path(purchase) do %>
-              <i class="fas fa-edit fa-1x"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to purchase, method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="fas fa-trash-alt"></i>
-            <% end %>
+            <div class="row">
+              <%= link_to edit_purchase_path(purchase), class: 'col-6 py-1' do %>
+                <i class="fas fa-edit fa-1x"></i>
+              <% end %>
+              <%= link_to purchase, method: :delete, data: { confirm: 'Are you sure?' }, class: 'col-6 py-1' do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

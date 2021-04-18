@@ -5,19 +5,26 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Item</th>        
         <th scope="col">Item Type</th>
-        <th colspan="2"></th>
+        <th colspan="1"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @autographs.each_with_index do |autograph, i| %>
         <tr scope="row">
-          <td><%= i+1 %>: </td>
-          <td><%= link_to autograph.name, autograph %></td>
+          <td class="px-1">
+            <div class="row">
+              <span class="col-1">
+                <%= i+1 %>: 
+              </span>
+              <span class="col px-0">          
+                <%= link_to autograph.name, autograph %></td>
+              </span>
+            </div>
+          </td>
           <td>
             <% @item = Item.where(id: autograph.item_id, owned_by: user).first %>
             <%= @item.item_name %>
@@ -26,14 +33,15 @@
             <%= ItemType.where(id: @item.item_type_id).first.type_name %>
           </td>
           <td>
-            <%= link_to edit_autograph_path(autograph) do %>
-              <i class="fas fa-edit fa-1x"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to autograph, method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="fas fa-trash-alt"></i>
-            <% end %>
+            <div>
+              <%= link_to edit_autograph_path(autograph), class: 'col-6 py-1' do %>
+                <i class="fas fa-edit fa-1x"></i>
+              <% end %>
+            
+              <%= link_to autograph, method: :delete, data: { confirm: 'Are you sure?' }, class: 'col-6 py-1' do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

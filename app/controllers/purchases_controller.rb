@@ -38,6 +38,7 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/1/edit
   def edit
+    puts @purchase.date
     from_object = params[:from_object]
     Rails.cache.write("from_object", from_object)
   end

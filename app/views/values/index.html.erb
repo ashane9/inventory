@@ -5,38 +5,43 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Piece</th>
         <th scope="col">Estimated value</th>
         <th scope="col">As of date</th>
-        <th colspan="2"></th>
+        <th colspan="1"></th>
       </tr>
     </thead>
 
     <tbody>
       <% @values.each_with_index do |value,i| %>
         <tr scope="row">  
-          <td><%= i+1 %>: </td>
-          <td>
-            <% item = Item.where(value_id: value.id).first %>
-            <% autograph = Autograph.where(value_id: value.id).first %>
-            <% if item %>
-              <%= link_to item.item_name, value %>
-            <% elsif autograph %>
-              <%= link_to autograph.name, value %>
-            <% end %>
+          <td class="px-1">
+            <div class="row">
+              <span class="col-1">
+                <%= i+1 %>: 
+              </span>
+              <span class="col px-0">
+                <% item = Item.where(value_id: value.id).first %>
+                <% autograph = Autograph.where(value_id: value.id).first %>
+                <% if item %>
+                  <%= link_to item.item_name, value %>
+                <% elsif autograph %>
+                  <%= link_to autograph.name, value %>
+                <% end %>
+              </span>
+            </div>
           </td>
-          <td><%= value.estimated_value %></td>
-          <td><%= value.as_of_date %></td>
+          <td><%= number_to_currency(value.estimated_value) %></td>
+          <td><%= value.as_of_date.strftime('%b %d %Y') %></td>
           <td>
-            <%= link_to edit_value_path(value) do %>
-              <i class="fas fa-edit fa-1x"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to value, method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="fas fa-trash-alt"></i>
-            <% end %>
+            <div class="row">          
+              <%= link_to edit_value_path(value), class: 'col-6 py-1' do %>
+                <i class="fas fa-edit fa-1x"></i>
+              <% end %>
+              <%= link_to value, method: :delete, data: { confirm: 'Are you sure?' }, class: 'col-6 py-1' do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>
