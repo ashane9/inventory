@@ -1,6 +1,21 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="row align-items-center my-3">
+    <div class="col-1">
+      <%= link_to back(:purchases_path), class: "flex-column align-items-start" do %>
+        <i class="fas fa-chevron-circle-left fa-3x"></i>
+      <% end %>
+    </div>
+    <div class="col-10 text-center pt-1">
+      <h1 class="display-4 px-2"><%= get_purchase_name %></h1>
+    </div>
+    <div class="col-1">
+      <%= link_to edit_purchase_path(@purchase), class: "d-flex align-items-center justify-content-around" do %>
+        <i class="fas fa-edit fa-2x mr-4"></i>
+      <% end %>
+    </div>
+  </div>
 
-<%= render 'info', object: @purchase %>
-
-<%= link_to 'Edit', edit_purchase_path(@purchase) %> |
-<%= link_to 'Back', back(:purchases_path) %>
+  <div class="d-flex align-items-center flex-column h-100 my-3">
+    <%= render 'info', {purchase: @purchase, from: @purchase} %>
+  </div>
+</div>

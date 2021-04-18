@@ -20,6 +20,11 @@
   </div>
 
   <div class="field form-group">
+    <%= form.label :description, class: "control-label" %>
+    <%= form.text_field :description, class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
     <%= form.label :profession, class: "control-label" %>
     <%= form.collection_select :profession_id, Profession.order(:profession_name),:id,:profession_name, {prompt: "Select Profession", 
     include_blank: 'Add New Profession'}, {class: "form-control", :onchange => "add_new_profession()"} %>
@@ -43,6 +48,16 @@
       <%= organization_form.label 'Enter Organization', class: "control-label" %>
       <%= organization_form.text_field :org_name, class: "form-control" %>
     <% end %>
+  </div>
+  
+  <div class="field form-group">
+    <%= form.label :inscription, class: "control-label" %>
+    <%= form.text_field :inscription, class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label 'Date of Autograph', class: "control-label" %>
+    <%= form.text_field :autograph_date, placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
   </div>
 
   <div class="field form-group">

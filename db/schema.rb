@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_020120) do
+ActiveRecord::Schema.define(version: 2021_04_15_034427) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 2021_04_12_020120) do
     t.text "description"
     t.integer "profession_id"
     t.integer "organization_id"
+    t.string "inscription"
+    t.date "autograph_date"
     t.index ["item_id"], name: "index_autographs_on_item_id"
     t.index ["organization_id"], name: "index_autographs_on_organization_id"
     t.index ["profession_id"], name: "index_autographs_on_profession_id"
@@ -122,7 +124,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_020120) do
 
   create_table "purchases", force: :cascade do |t|
     t.string "invoice_number"
-    t.bigint "purchase_type_id", null: false
+    t.integer "purchase_type_id", null: false
     t.string "location"
     t.date "date"
     t.decimal "sale_price", precision: 5, scale: 2
@@ -132,6 +134,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_020120) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "owned_by"
+    t.decimal "additional", precision: 5, scale: 2
     t.index ["purchase_type_id"], name: "index_purchases_on_purchase_type_id"
   end
 

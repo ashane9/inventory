@@ -1,6 +1,7 @@
 class ValuesController < ApplicationController
   include Secured
   before_action :set_value, only: %i[ show edit update destroy ]
+  helper_method :get_value_name
 
   # GET /values or /values.json
   def index
@@ -8,8 +9,20 @@ class ValuesController < ApplicationController
     @values = Value.where(owned_by: user).all
   end
 
+  def get_value_name
+    item = Item.where(value_id: @value.id).first
+    autograph = Autograph.where(value_id: @value.id).first
+    if item
+      item.item_name
+    elsif autograph
+      autograph.name
+    end
+  end
+
   # GET /values/1 or /values/1.json
   def show
+    from_object = params[:from_object]
+    Rails.cache.write("from_object", from_object)
   end
 
   # GET /values/new
@@ -20,6 +33,8 @@ class ValuesController < ApplicationController
 
   # GET /values/1/edit
   def edit
+    from_object = params[:from_object]
+    Rails.cache.write("from_object", from_object)
   end
 
   def add_value_id(value_id)
@@ -67,8 +82,15 @@ class ValuesController < ApplicationController
   def update
     respond_to do |format|
       if @value.update(value_params)
-        format.html { redirect_to @value, notice: "Value was successfully updated." }
-        format.json { render :show, status: :ok, location: @value }
+        from_object = Rails.cache.read("from_object")
+        if from_object
+          Rails.cache.delete("from_object")
+          format.html { redirect_to from_object, notice: "Value was successfully updated." }
+          format.json { render :show, status: :ok, location: from_object }
+        else
+          format.html { redirect_to @value, notice: "Value was successfully updated." }
+          format.json { render :show, status: :ok, location: @value }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @value.errors, status: :unprocessable_entity }

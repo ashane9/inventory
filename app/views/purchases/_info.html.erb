@@ -1,39 +1,52 @@
-<p>
-  <strong>Invoice number:</strong>
-  <%= @purchase.invoice_number %>
-</p>
+<div class="py-1 mx-auto">
+  <p >
+    <strong>Invoice Number:</strong>
+    <%= @purchase.invoice_number %>
+  </p>
 
-<p>
-  <strong>Purchase type:</strong>
-  <%= PurchaseType.where(id: @purchase.purchase_type.id).first.type_name %>
-</p>
+  <p>
+    <strong>Purchase Type:</strong>
+    <%= PurchaseType.where(id: @purchase.purchase_type.id).first.type_name %>
+  </p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @purchase.location %>
-</p>
+  <p>
+    <strong>Location:</strong>
+    <%= @purchase.location %>
+  </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @purchase.date %>
-</p>
+  <p>
+    <strong>Date:</strong>
+    <%= @purchase.date %>
+  </p>
 
-<p>
-  <strong>Sale price:</strong>
-  <%= number_to_currency(@purchase.sale_price) %>
-</p>
+  <p>
+    <strong>Sale Price:</strong>
+    <%= number_to_currency(@purchase.sale_price) %>
+  </p>
 
-<p>
-  <strong>Buyer premium:</strong>
-  <%= number_to_currency(@purchase.buyer_premium) %>
-</p>
+  <p>
+    <strong>Buyer Premium:</strong>
+    <%= number_to_currency(@purchase.buyer_premium) %>
+  </p>
 
-<p>
-  <strong>Shipping:</strong>
-  <%= number_to_currency(@purchase.shipping) %>
-</p>
+  <p>
+    <strong>Shipping Cost:</strong>
+    <%= number_to_currency(@purchase.shipping) %>
+  </p>
 
-<p>
-  <strong>Total cost:</strong>
-  <%= number_to_currency(@purchase.total_cost) %>
-</p>
+  <p>
+    <strong>
+    <%if from.is_a? Item %>
+    Additional Fee:
+    <%else%>
+    Inscription Cost:
+    <%end%>
+    </strong>
+    <%= number_to_currency(@purchase.additional) %>
+  </p>
+
+  <p>
+    <strong>Total Cost:</strong>
+    <%= number_to_currency(@purchase.total_cost) %>
+  </p>
+</div>

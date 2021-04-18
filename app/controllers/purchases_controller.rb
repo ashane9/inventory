@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   include Secured
   before_action :set_purchase, only: %i[ show edit update destroy ]
-  helper_method :add_purchase_id
+  helper_method :add_purchase_id, :get_purchase_name
 
   # GET /purchases or /purchases.json
   def index
@@ -14,8 +14,20 @@ class PurchasesController < ApplicationController
     # number_to_currency(form.object.sale_price)
   end
 
+  def get_purchase_name
+    item = Item.where(purchase_id: @purchase.id).first
+    autograph = Autograph.where(purchase_id: @purchase.id).first
+    if item
+      item.item_name
+    elsif autograph
+      autograph.name
+    end
+  end
+
   # GET /purchases/1 or /purchases/1.json
   def show
+    from_object = params[:from_object]
+    Rails.cache.write("from_object", from_object)
   end
 
   # GET /purchases/new
@@ -26,6 +38,8 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/1/edit
   def edit
+    from_object = params[:from_object]
+    Rails.cache.write("from_object", from_object)
   end
 
   def add_purchase_id(purchase_id)
@@ -43,7 +57,6 @@ class PurchasesController < ApplicationController
   # POST /purchases or /purchases.json
   def create    
     @redirect_path = Rails.cache.read("redirect_path")
-    puts @redirect_path
     if params[:type_name] != ''
       @purchase_type = PurchaseType.new(purchase_type_params)
       @purchase_type.save
@@ -81,8 +94,15 @@ class PurchasesController < ApplicationController
   def update
     respond_to do |format|
       if @purchase.update(purchase_params)
-        format.html { redirect_to @purchase, notice: "Purchase was successfully updated." }
-        format.json { render :show, status: :ok, location: @purchase }
+        from_object = Rails.cache.read("from_object")
+        if from_object         
+          Rails.cache.delete("from_object")
+          format.html { redirect_to from_object, notice: "Purchase was successfully updated." }
+          format.json { render :show, status: :ok, location: from_object }
+        else
+          format.html { redirect_to @purchase, notice: "Purchase was successfully updated." }
+          format.json { render :show, status: :ok, location: @purchase }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @purchase.errors, status: :unprocessable_entity }

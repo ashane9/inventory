@@ -18,7 +18,7 @@
 
   <div class="field form-group">
     <%= form.label :as_of_date, class: "control-label" %>
-    <%= form.date_select :as_of_date, class: "form-control" %>
+    <%= form.text_field 'date', placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
   </div>
 
   <div class="actions form-group py-3">
