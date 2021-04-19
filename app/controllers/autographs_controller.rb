@@ -138,7 +138,7 @@ class AutographsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def autograph_params
-      params.require(:autograph).permit(:name, :item_id, :profession_id, :organization_id)
+      params.require(:autograph).permit(:name, :item_id, :profession_id, :image, :organization_id)
     end
     
     def authentication_params
