@@ -1,4 +1,11 @@
--When editing, page load of text fields should contain previous Information
--correct delete dialog message to specify what you are deleting
--set up deletes - has_many add property (dependent: destory) to delete child recordss
--cleanup display of authentications on autograph form
+-set up deletes
+  -item
+    -autographs
+    -purchase
+    -value
+  -autograph
+    -authentication autograph 
+    -purchase
+    -value  
+
+-change green color on item lookup
