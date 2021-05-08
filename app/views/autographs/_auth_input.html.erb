@@ -1,0 +1,20 @@
+<div>
+
+    <%= link_to 'Delete', '#', class: 'remove_record' %>
+
+  <div class="field form-group">
+    <%= form.label :authentication, class: "control-label" %>
+    <%= auto_auth_form.collection_select :authentication_id, Authentication.order(:auth_name),:id,:auth_name, {prompt: "Select Authentication", 
+    include_blank: 'Add New Authentication'}, {id: "authentication_id_#{index}", name: "autograph[authentications_autographs][#{index}][authentication_id]", class: "form-control", :onchange => "add_new_authentication(#{index})"} %>
+  </div>
+
+  <%= content_tag :div, id: "new_authentication_#{index}", style: "display:none", class: "field form-group" do %>
+    <%= fields_for @authentications do |authentication_form|%>
+      <%= authentication_form.label 'Enter Authentication', class: "control-label" %>
+      <%= authentication_form.text_field :auth_name, {id: "auth_name_#{index}", name: "autograph[authentications_autographs][#{index}][auth_name]", class: "form-control"} %>
+    <% end %>
+  <% end %>
+
+  <%= auto_auth_form.label :authentication_number, class: "control-label" %>
+  <%= auto_auth_form.text_field :authentication_number, {id: "autograph_authentications_autographs_authentication_number_#{index}", name: "autograph[authentications_autographs][#{index}][authentication_number]", class: "form-control"} %>
+</div>

@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
     @user = session[:userinfo]
+    clear_all_cache
   end
   
   def new_autograph

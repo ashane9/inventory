@@ -1,4 +1,3 @@
-console.log("LOADING");
 // var item_search = function(){
 //   // $(document).on('turbolinks:load', () => {
 //   console.log("item_search called");
@@ -76,7 +75,7 @@ var item_search = function() {
     select: function( event, ui ) {  
       // item = ui.item.id;
       $("#item-search-result").show();
-      $("#result-name").text(ui.item.label).trigger("change");
+      $("#result-name").text(ui.item.value).trigger("change");
       $("#result-desc").text(ui.item.description).trigger("change");
       $.ajax({
         url: "/autographs/get_item",
@@ -97,7 +96,7 @@ var item_search = function() {
   $("#item-search").on("search", function(event) {
     console.log("search clear");
     if($("#item-search").value == null){
-      $("#item-search-result").hide();
+      // $("#item-search-result").hide();
       $("#result-name").text('').trigger("change");
       $("#result-desc").text('').trigger("change");
       $.ajax({

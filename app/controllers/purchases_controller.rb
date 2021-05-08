@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   include Secured
   before_action :set_purchase, only: %i[ show edit update destroy ]
-  helper_method :add_purchase_id, :get_purchase_name
+  helper_method :add_purchase_id, :get_purchase_name, :get_purchase_description, :get_autograph_info, :get_item_info, :total_sale_price
 
   # GET /purchases or /purchases.json
   def index
@@ -9,18 +9,55 @@ class PurchasesController < ApplicationController
     @purchases = Purchase.where(owned_by: user).all
   end
 
+  def total_sale_price
+    purchase_params[:sale_price].gsub(/[^\d\.]/, '').to_f + 
+    purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f + 
+    purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f + 
+    purchase_params[:additional].gsub(/[^\d\.]/, '').to_f
+  end
+
   def return_value_of_symbol(obj,sym)
     obj.object.send(sym)
     # number_to_currency(form.object.sale_price)
   end
 
-  def get_purchase_name
-    item = Item.where(purchase_id: @purchase.id).first
-    autograph = Autograph.where(purchase_id: @purchase.id).first
+  def get_item_info    
+    Item.where(id: params[:from_id]).first
+  end
+
+  def get_autograph_info
+    Autograph.where(id: params[:from_id]).first
+  end
+
+  def get_purchase_name(purchase)
+    if purchase.id.nil?
+      item = get_item_info if params[:from].include? 'item'
+      autograph = get_autograph_info if params[:from].include? 'autograph'
+    else
+      item = Item.where(purchase_id: purchase.id).first
+      autograph = Autograph.where(purchase_id: purchase.id).first
+    end
+
     if item
       item.item_name
     elsif autograph
       autograph.name
+    end
+  end
+
+  def get_purchase_description(purchase)
+    if purchase.id.nil?
+      item = get_item_info if params[:from].include? 'item'
+      autograph = get_autograph_info if params[:from].include? 'autograph'
+    else
+      item = Item.where(purchase_id: purchase.id).first
+      autograph = Autograph.where(purchase_id: purchase.id).first
+    end
+
+    if item
+      item.description
+    elsif autograph
+      autograph.description
     end
   end
 
@@ -66,7 +103,14 @@ class PurchasesController < ApplicationController
       @purchase_type_id = params[:purchase][:purchase_type_id]
     end
     
-    @purchase = Purchase.new(purchase_params.merge!({purchase_type_id: @purchase_type_id, owned_by: user}))
+    @purchase = Purchase.new(purchase_params.merge!({
+      purchase_type_id: @purchase_type_id, 
+      owned_by: user,
+      sale_price: purchase_params[:sale_price].gsub(/[^\d\.]/, '').to_f,
+      buyer_premium: purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f,
+      shipping: purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f,
+      additional: purchase_params[:additional].gsub(/[^\d\.]/, '').to_f,
+      total_cost: total_sale_price}))
     
     respond_to do |format|
       if @purchase.save
@@ -94,7 +138,12 @@ class PurchasesController < ApplicationController
   # PATCH/PUT /purchases/1 or /purchases/1.json
   def update
     respond_to do |format|
-      if @purchase.update(purchase_params)
+      if @purchase.update(purchase_params.merge!({
+        sale_price: purchase_params[:sale_price].gsub(/[^\d\.]/, '').to_f,
+        buyer_premium: purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f,
+        shipping: purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f,
+        additional: purchase_params[:additional].gsub(/[^\d\.]/, '').to_f,
+        total_cost: total_sale_price}))
         from_object = Rails.cache.read("from_object")
         if from_object         
           Rails.cache.delete("from_object")
@@ -128,7 +177,7 @@ class PurchasesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def purchase_params
-      params.require(:purchase).permit(:invoice_number, :purchase_type, :location, :date, :source, :sale_price, :buyer_premium, :shipping, :total_cost)
+      params.require(:purchase).permit(:invoice_number, :purchase_type_id, :location, :date, :source, :sale_price, :buyer_premium, :shipping, :additional, :total_cost)
     end
     def purchase_type_params
       params.permit(:type_name)

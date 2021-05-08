@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :back, :redirect_setup, :header_name, :session_active?, :user
+  helper_method :back, :redirect_setup, :header_name, :session_active?, :user, :clear_all_cache
 
   def back(default_path)  
     unless Rails.cache.read("redirect_path").nil?
@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
   def clear_redirect
     Rails.cache.delete("redirect_path")
     Rails.cache.delete("from_id")
+  end
+
+  def clear_all_cache
+    Rails.cache.clear
   end
 
   private

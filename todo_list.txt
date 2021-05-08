@@ -1,7 +1,4 @@
--Pass Item ID from show page, when add autograph/purchase/value button is clicked
--Pass Autograph ID from show page, when add purchase/value button is clicked
 -When editing, page load of text fields should contain previous Information
--date is defaulting to 8/1/2026 when clicking edit
--autograph date column
-
-
+-correct delete dialog message to specify what you are deleting
+-set up deletes - has_many add property (dependent: destory) to delete child recordss
+-cleanup display of authentications on autograph form

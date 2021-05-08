@@ -6,7 +6,8 @@
       <% end %>
     </div>
     <div class="col-10 text-center pt-1">
-      <h1 class="display-4 px-2"><%= get_purchase_name %></h1>
+      <h1 class="display-4 px-2"><%= get_purchase_name(@purchase) %></h1>
+      <h4 class="px-2"><%= get_purchase_description(@purchase) %></h4>
     </div>
     <div class="col-1">
       <%= link_to edit_purchase_path(@purchase), class: "d-flex align-items-center justify-content-around" do %>

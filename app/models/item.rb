@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
-  has_many :autographs
+  has_many :autographs, dependent: :destroy
+  accepts_nested_attributes_for :autographs, allow_destroy: true, reject_if: proc { |att| att['name'].blank? }
   belongs_to :item_type
   belongs_to :value, optional: true
   belongs_to :purchase, optional: true

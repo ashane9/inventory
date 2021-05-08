@@ -11,14 +11,23 @@
     </div>
   <% end %>
 
+  <h5>
+    <%=get_value_name(value)%>
+  </h5>
+  <h6>  
+    <%=get_value_description(value)%>
+  </h6>
+  
+  <br>
+
   <div class="field form-group">
     <%= form.label :estimated_value, class: "control-label" %>
-    <%= form.text_field :estimated_value, class: "form-control" %>
+    <%= form.text_field :estimated_value, placeholder: '$0.00', value: number_to_currency(form.object.estimated_value), class: "form-control", id: "estimated_value"  %>
   </div>
 
   <div class="field form-group">
     <%= form.label :as_of_date, class: "control-label" %>
-    <%= form.text_field 'date', placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
+    <%= form.text_field 'as_of_date', placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
   </div>
 
   <div class="actions form-group py-3">

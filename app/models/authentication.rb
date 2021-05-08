@@ -1,3 +1,4 @@
 class Authentication < ApplicationRecord
-  has_and_belongs_to_many :autographs, optional: true
+  has_many :authentications_autographs
+  has_many :autographs, through: :authentications_autographs
 end

@@ -11,6 +11,15 @@
     </div>
   <% end %>
 
+  <h5>
+    <%=get_purchase_name(purchase)%>
+  </h5>
+  <h6>  
+    <%=get_purchase_description(purchase)%>
+  </h6>
+  
+  <br>
+
   <div class="field form-group">
     <%= form.label :purchase_type, class: "control-label" %>
     <%= form.collection_select :purchase_type_id, PurchaseType.order(:type_name),:id,:type_name, {prompt: "Select Purchase Type", 
@@ -41,22 +50,29 @@
 
   <div class="field form-group">
     <%= form.label :sale_price, class: "control-label" %>    
-    <%= form.text_field :sale_price, placeholder: '$0.00', value: number_to_currency(form.object.sale_price), class: "form-control" %>
+    <%= form.text_field :sale_price, placeholder: '$0.00', value: number_to_currency(form.object.sale_price), class: "form-control", id: "sale_price" %>
   </div>
 
   <div class="field form-group">
     <%= form.label :buyer_premium, class: "control-label" %>
-    <%= form.text_field :buyer_premium, placeholder: '$0.00', value: number_to_currency(form.object.sale_price), class: "form-control" %>
+    <%= form.text_field :buyer_premium, placeholder: '$0.00', value: number_to_currency(form.object.buyer_premium), class: "form-control", id: "buyer_premium" %>
   </div>
 
   <div class="field form-group">
     <%= form.label :shipping, class: "control-label" %>
-    <%= form.text_field :shipping, placeholder: '$0.00', value: number_to_currency(form.object.sale_price), class: "form-control" %>
+    <%= form.text_field :shipping, placeholder: '$0.00', value: number_to_currency(form.object.shipping), class: "form-control", id: "shipping" %>
   </div>
 
   <div class="field form-group">
+    <%= form.label 'Additional Charge', class: "control-label" %>
+    <%= form.text_field :additional, placeholder: '$0.00', value: number_to_currency(form.object.additional), class: "form-control", id: "additional" %>
+  </div>
+
+  <div class="field">
     <%= form.label :total_cost, class: "control-label" %>
-    <%= form.text_field :total_cost, placeholder: '$0.00', value: number_to_currency(form.object.sale_price), class: "form-control" %>
+    <p id='total_cost'>
+      <%= number_to_currency(form.object.total_cost) %>
+    </p>
   </div>
 
   <div class="actions form-group py-3">

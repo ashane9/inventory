@@ -12,7 +12,7 @@
   <% end %>
 
 <br>
-<%= render 'items/item_lookup'%>
+<%= render 'items/item_lookup', item: get_item_id %>
 <br>
   <div class="field form-group">
     <%= form.label :name, class: "control-label" %>
@@ -60,24 +60,18 @@
     <%= form.text_field :autograph_date, placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :authentication, class: "control-label" %>
-    <%= form.collection_select :authentication_id, Authentication.order(:name),:id,:name, {prompt: "Select Authentication", 
-    include_blank: 'Add New Authentication'}, {class: "form-control", :onchange => "add_new_authentication()"} %>
+  <div class="auth_fields">
+    <div class="field form-group">  
+      <% @authentication_autograph.each_with_index do |auto_auth, index| %>
+        <%= form.fields_for :authentications_autographs, auto_auth do |auto_auth_form|%>
+          <%= render 'auth_input', form: form, auto_auth_form: auto_auth_form, index: index %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field form-group" id="new_authentication" style="display:none">
-    <%= fields_for @authentication do |authentication_form|%>
-      <%= authentication_form.label 'Enter Authentication', class: "control-label" %>
-      <%= authentication_form.text_field :name, class: "form-control" %>
-    <% end %>
-  </div>
-
-  <div class="field form-group">  
-    <%= fields_for @autograph_authentication do |auto_auth_form|%>
-      <%= auto_auth_form.label :authentication_number, class: "control-label" %>
-      <%= auto_auth_form.text_field :authentication_number, class: "form-control" %>
-    <% end %>
+  <div class="form-actions">
+    <%= link_to_add_row('Add Authentication', form, :authentications_autographs, class: 'btn btn-primary') %>
   </div>
 
   <div class="field form-group">

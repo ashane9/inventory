@@ -1,21 +1,51 @@
 class ValuesController < ApplicationController
   include Secured
   before_action :set_value, only: %i[ show edit update destroy ]
-  helper_method :get_value_name
+  helper_method :get_value_name, :get_value_description, :get_item_info, :get_autograph_info
 
   # GET /values or /values.json
   def index
     clear_redirect
     @values = Value.where(owned_by: user).all
   end
+  
+  def get_item_info    
+    Item.where(id: params[:from_id]).first
+  end
 
-  def get_value_name
-    item = Item.where(value_id: @value.id).first
-    autograph = Autograph.where(value_id: @value.id).first
+  def get_autograph_info
+    Autograph.where(id: params[:from_id]).first
+  end
+
+  def get_value_name(value)    
+    if value.id.nil?
+      item = get_item_info if params[:from].include? 'item'
+      autograph = get_autograph_info if params[:from].include? 'autograph'
+    else
+      item = Item.where(value_id: value.id).first
+      autograph = Autograph.where(value_id: value.id).first
+    end
+
     if item
       item.item_name
     elsif autograph
       autograph.name
+    end
+  end
+
+  def get_value_description(value)        
+    if value.id.nil?
+      item = get_item_info if params[:from].include? 'item'
+      autograph = get_autograph_info if params[:from].include? 'autograph'
+    else
+      item = Item.where(value_id: value.id).first
+      autograph = Autograph.where(value_id: value.id).first
+    end
+
+    if item
+      item.description
+    elsif autograph
+      autograph.description
     end
   end
 
@@ -53,7 +83,10 @@ class ValuesController < ApplicationController
   def create
     @redirect_path = Rails.cache.read("redirect_path")
     
-    @value = Value.new(value_params.merge!({owned_by: user}))
+    @value = Value.new(value_params.merge!({
+      owned_by: user,
+      estimated_value: value_params[:estimated_value].gsub(/[^\d\.]/, '').to_f
+      }))
 
     respond_to do |format|
       if @value.save
@@ -81,7 +114,9 @@ class ValuesController < ApplicationController
   # PATCH/PUT /values/1 or /values/1.json
   def update
     respond_to do |format|
-      if @value.update(value_params)
+      if @value.update(value_params.merge!({
+        estimated_value: value_params[:estimated_value].gsub(/[^\d\.]/, '').to_f
+        }))
         from_object = Rails.cache.read("from_object")
         if from_object
           Rails.cache.delete("from_object")

@@ -3,14 +3,23 @@
   <input type="search" id="item-search" placeholder="Search for item..." autocomplete="off" class= "form-control" >
 </div>
 
-<div id="item-search-result" style="display:none">
+<!-- display none, need to show when item exists -->
+<div id="item-search-result" style="">
   <div class="row">
     <strong class="col">Item Name:</strong>
-    <div id="result-name" class="col"></div>
+    <div id="result-name" class="col">
+      <% if item %>
+        <%= item.item_name %>
+      <% end %>
+    </div>
   </div>
   <br>
   <div class="row">
     <strong class="col">Item Description:</strong>
-    <div id="result-desc" class="col"></div>
+    <div id="result-desc" class="col">
+      <% if item %>
+        <%= item.description %>
+      <% end %>
+    </div>
   </div>
 </div>

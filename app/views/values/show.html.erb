@@ -6,7 +6,8 @@
       <% end %>
     </div>
     <div class="col-10 text-center pt-1">
-      <h1 class="display-4 px-2"><%= get_value_name %></h1>
+      <h1 class="display-4 px-2"><%= get_value_name(@value) %></h1>
+      <h4 class="px-2"><%= get_value_description(@value) %></h4>
     </div>
     <div class="col-1">
       <%= link_to edit_value_path(@value), class: "d-flex align-items-center justify-content-around" do %>
@@ -15,6 +16,7 @@
     </div>
   </div>
 
+  <br>
   <div class="d-flex align-items-center flex-column h-100 my-3">
     <%= render 'info', {value: @value, from: @value} %>
   </div>

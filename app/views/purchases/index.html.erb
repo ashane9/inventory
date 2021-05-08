@@ -22,25 +22,19 @@
                 <%= i+1 %>: 
               </span>
               <span class="col">
-                <% item = Item.where(purchase_id: purchase.id).first %>
-                <% autograph = Autograph.where(purchase_id: purchase.id).first %>
-                <% if item %>
-                  <%= link_to item.item_name, purchase %>
-                <% elsif autograph %>
-                  <%= link_to autograph.name, purchase %>
-                <% end %>
+                <%= link_to get_purchase_name(purchase), purchase %>
               </span>
             </div>
           </td>
           <td><%= PurchaseType.where(id: purchase.purchase_type.id).first.type_name %></td>
-          <td><%= purchase.date %></td>
+          <td><%= purchase.date.strftime('%b %d %Y') unless purchase.date.nil? %></td>
           <td><%= number_to_currency(purchase.total_cost) %></td>
           <td>
             <div class="row">
               <%= link_to edit_purchase_path(purchase), class: 'col-6 py-1' do %>
                 <i class="fas fa-edit fa-1x"></i>
               <% end %>
-              <%= link_to purchase, method: :delete, data: { confirm: 'Are you sure?' }, class: 'col-6 py-1' do %>
+              <%= link_to purchase, method: :delete, data: { confirm: "Do you want to delete purchase for #{get_purchase_name(purchase)}?" }, class: 'col-6 py-1' do %>
                 <i class="fas fa-trash-alt"></i>
               <% end %>
             </div>

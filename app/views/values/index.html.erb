@@ -21,24 +21,18 @@
                 <%= i+1 %>: 
               </span>
               <span class="col px-0">
-                <% item = Item.where(value_id: value.id).first %>
-                <% autograph = Autograph.where(value_id: value.id).first %>
-                <% if item %>
-                  <%= link_to item.item_name, value %>
-                <% elsif autograph %>
-                  <%= link_to autograph.name, value %>
-                <% end %>
+                <%= link_to get_value_name(value), value %>
               </span>
             </div>
           </td>
           <td><%= number_to_currency(value.estimated_value) %></td>
-          <td><%= value.as_of_date.strftime('%b %d %Y') %></td>
+          <td><%= value.as_of_date.strftime('%b %d %Y') unless value.as_of_date.nil? %></td>
           <td>
             <div class="row">          
               <%= link_to edit_value_path(value), class: 'col-6 py-1' do %>
                 <i class="fas fa-edit fa-1x"></i>
               <% end %>
-              <%= link_to value, method: :delete, data: { confirm: 'Are you sure?' }, class: 'col-6 py-1' do %>
+              <%= link_to value, method: :delete, data: { confirm: "Do you want to delete purchase for #{get_value_name(value)}?" }, class: 'col-6 py-1' do %>
                 <i class="fas fa-trash-alt"></i>
               <% end %>
             </div>

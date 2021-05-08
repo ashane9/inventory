@@ -24,17 +24,10 @@ class ItemsController < ApplicationController
 
   def search
     q = params[:term].downcase
-    puts q
     items = Item.where(owned_by: user).search_items(q)
-    puts items.as_json
-    test = items.map{|i| [i.item_name,i.description,i.id]}
-    test2 = items.map{|i| {name: i.item_name,description: i.description,id: i.id}}.to_json
-    test3 = items.map{|i| {label: i.item_name, value: i.item_name, description: i.description, id: i.id}}.to_json
+    items_json = items.map{|i| {label: "#{i.item_name}: #{i.description}", value: i.item_name, description: i.description, id: i.id}}.to_json
   
-    puts test3
-    # puts test.to_json
-
-    render json: test3
+    render json: items_json
     # render :json => items.map{ |i| "#{i.item_name}:<span style='font-size:smaller;color:red'>#{i.description}</span>:#{i.id}" }
     # render json: test
     # render json: items.map(&:item_name).uniq 
@@ -92,7 +85,7 @@ class ItemsController < ApplicationController
         unless redirect_path.nil?
           Rails.cache.delete("redirect_path")
           puts "redirect_path is deleted in items"
-          format.html { redirect_to send redirect_path, notice: "Item was successfully created." }
+          format.html { redirect_to send redirect_path, from_id: @item.id, notice: "Item was successfully created." }
         else
           format.html { redirect_to @item, notice: "Item was successfully created." }
           format.json { render :show, status: :created, location: @item }
