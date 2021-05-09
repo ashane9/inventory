@@ -7,5 +7,3 @@
     -authentication autograph 
     -purchase
     -value  
-
--change green color on item lookup
