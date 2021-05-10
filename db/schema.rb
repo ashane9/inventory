@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_192053) do
+ActiveRecord::Schema.define(version: 2021_05_09_234100) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_192053) do
     t.integer "autograph_id", null: false
     t.integer "authentication_id", null: false
     t.string "authentication_number"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", default: "2021-05-10 00:52:06", null: false
+    t.datetime "updated_at", default: "2021-05-10 00:52:06", null: false
     t.string "owned_by"
     t.index ["authentication_id", "autograph_id"], name: "auto_auth_index", unique: true
   end

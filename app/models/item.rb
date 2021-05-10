@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   has_many :autographs, dependent: :destroy
-  accepts_nested_attributes_for :autographs, allow_destroy: true, reject_if: proc { |att| att['name'].blank? }
+  accepts_nested_attributes_for :autographs, reject_if: proc { |att| att['name'].blank? }
   belongs_to :item_type
   belongs_to :value, optional: true
   belongs_to :purchase, optional: true
@@ -14,5 +14,18 @@ class Item < ApplicationRecord
 
   def self.count(owner)
     where(owned_by: owner).count
+  end
+  
+  def destroy  
+    value = value_id
+    purchase = purchase_id
+    puts "item id: #{id}"
+    super
+    puts "here"
+    puts "value #{value}"
+    puts "purchase #{purchase}"
+    puts "auto value #{Value.find(value).estimated_value}"
+    Value.find(value).delete if value
+    Purchase.find(purchase).delete if purchase
   end
 end

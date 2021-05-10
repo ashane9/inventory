@@ -10,7 +10,6 @@ class AutographsController < ApplicationController
   end
 
   def cancel(root_path)
-    # Rails.cache.delete("item_id")
     root_path
   end
 
@@ -27,19 +26,12 @@ class AutographsController < ApplicationController
 
   #used in ajax call for js autocomplete search
   def get_item
-    puts params[:item_id]
     Rails.cache.write("item_id", params[:item_id])
   end
 
   # GET /autographs/1 or /autographs/1.json
   def show
-    # unless params[:from].nil?
       redirect_setup
-      # from_id = params[:from_id]
-      # redirect_path = "#{params[:from]}_path" 
-      # Rails.cache.write("redirect_path", redirect_path)
-      # Rails.cache.write("from_id", from_id)
-    # end
   end
 
   # GET /autographs/new
@@ -52,17 +44,10 @@ class AutographsController < ApplicationController
       Rails.cache.write("item_id", params[:from_id]) 
     end
     redirect_setup
-    # unless params[:from].nil?
-    #   from_id = params[:from_id]
-    #   redirect_path = "#{params[:from]}" 
-    #   Rails.cache.write("redirect_path", redirect_path)
-    #   Rails.cache.write("from_id", from_id)
-    # end
   end
 
   # GET /autographs/1/edit
   def edit
-    # @authentication_autograph = AuthenticationsAutograph.where(autograph_id: @autograph.id, owned_by: user).first
   end
   
    # POST /autographs or /autographs.json
@@ -104,13 +89,6 @@ class AutographsController < ApplicationController
       end
     end
     
-    # @autograph.authentications_autographs.build(authentication_id: params[:autograph][:authentications_autographs][:authentication_id],
-      # authentication_number: params[:autograph][:authentications_autographs][:authentication_number], owned_by: user)  
-    
-      
-
-    # authentication_autographs = @autograph.authentications_autographs.build(autograph_id: @autograph.id, authentication_id: params[:autograph][:authentication_ids],
-        #  authentication_number: params[:autograph][:autographs_authentications][:authentication_number], owned_by: user)  
     respond_to do |format|
       if @autograph.save
         # AuthenticationsAutograph.where(autograph_id: @autograph.id, authentication_id: params[:autograph][:authentication_ids]).all.each do |record|
@@ -182,32 +160,18 @@ class AutographsController < ApplicationController
         authentication.save
         v[:authentication_id] = authentication.id
       end
-      
-      AuthenticationsAutograph.where(authentication_id: v[:authentication_id],autograph_id: @autograph.id, owned_by: user).update(
-        authentication_number: v[:authentication_number], owned_by: user)        
+      puts "k #{k}"
+      puts "v #{v}"
+      puts "id #{@autograph.id}"
+      puts AuthenticationsAutograph.where(authentication_id: v[:authentication_id],autograph_id: @autograph.id, owned_by: user)
+      AuthenticationsAutograph.upsert(
+        {authentication_id: v[:authentication_id],autograph_id: @autograph.id,authentication_number: v[:authentication_number], owned_by: user},
+      unique_by: [:authentication_id, :autograph_id])        
     end
     
     respond_to do |format|
       if @autograph.update(autograph_params.merge!({ 
         profession_id: @profession_id, organization_id: @organization_id, owned_by: user }))
-
-        
-
-        # if params[:auth_name] != ''
-        #   authentication = Authentication.new(authentication_params)
-        #   authentication.save
-        #   authentication_id = authentication.id
-        # elsif params[:authentication_id] != ''
-        #   authentication_id = params[:authentication_id]
-        # end
-
-        # unless authentication_id.nil?
-        #   merged_params = authentication_autograph_params.merge!({autograph_id: @autograph.id, 
-        #   authentication_id: authentication_id, 
-        #   authentication_number: params[:authentication_number],
-        #   owned_by: user})
-        #   @authentication_autograph.update(merged_params)
-        # end
 
         format.html { redirect_to @autograph, notice: "Autograph was successfully updated." }
         format.json { render :show, status: :ok, location: @autograph }
@@ -219,7 +183,7 @@ class AutographsController < ApplicationController
   end
 
   # DELETE /autographs/1 or /autographs/1.json
-  def destroy
+  def destroy    
     @autograph.destroy
     respond_to do |format|
       format.html { redirect_to autographs_url, notice: "Autograph was successfully destroyed." }
