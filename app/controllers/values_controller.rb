@@ -99,7 +99,6 @@ class ValuesController < ApplicationController
             format.html { redirect_to send @redirect_path, @from_id, notice: "Value was successfully created." }
           end
           Rails.cache.delete("redirect_path")
-          puts "redirect_path is deleted in values"
         else  
           format.html { redirect_to @value, notice: "Value was successfully created." }
           format.json { render :show, status: :created, location: @value }

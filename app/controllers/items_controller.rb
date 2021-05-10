@@ -2,7 +2,6 @@ class ItemsController < ApplicationController
   include Secured
   before_action :force_json, only: :search
   before_action :set_item, only: %i[ show edit update destroy ]
-  helper_method :add_new_item_type
 
   # GET /items or /items.json
   def index        
@@ -13,13 +12,6 @@ class ItemsController < ApplicationController
   # GET /items/1 or /items/1.json
   def show
     redirect_setup
-    # respond_to do |format|
-      
-    # end
-        # unless params[:from].nil?
-      # @redirect_path = "#{params[:from]}" 
-      # Rails.cache.write("redirect_path", "#{params[:from]}")
-    # end
   end
 
   def search
@@ -28,43 +20,16 @@ class ItemsController < ApplicationController
     items_json = items.map{|i| {label: "#{i.item_name}: #{i.description}", value: i.item_name, description: i.description, id: i.id}}.to_json
   
     render json: items_json
-    # render :json => items.map{ |i| "#{i.item_name}:<span style='font-size:smaller;color:red'>#{i.description}</span>:#{i.id}" }
-    # render json: test
-    # render json: items.map(&:item_name).uniq 
-    # if q.size > 0
-      # items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
-      # found = @items.present? ?  @items.map{|x| x["item_name"]} : @items
-      # found = items.map{|x| x["item_name"]}
-      # render :json => found
-    # else
-      # render :json => []
-    # end
-    # q = params[:q].downcase
-    # @items = Item.where("LOWER(item_name) LIKE ? or LOWER(description) LIKE ?", "%#{q}%", "%#{q}%").limit(5)
-    # render json: {items: @items}
   end
 
   # GET /items/new
   def new
     @item = Item.new
-    redirect_setup
-    # unless params[:from].nil?
-      # @redirect_path = "#{params[:from]}_path" 
-      # Rails.cache.write("redirect_path", @redirect_path)
-    # end
-    # @item_types = ItemType.all.map{|c| [c.type_name, c.id]}
-    #  @item_types += [['Other', -1]] # as there is no negative ID
+    redirect_setup   
   end
 
   # GET /items/1/edit
   def edit
-  end
-
-  def add_new_item_type
-    # ItemTypesController.new
-    #redirect_to item_types_url
-    #render 'item_types/_form', item_type: @item_type
-    
   end
 
   # POST /items or /items.json
@@ -77,14 +42,12 @@ class ItemsController < ApplicationController
     else
       @item_type_id = params[:item][:item_type_id]
     end
-    # @item = Item.new(item_params.merge!({item_type_id: ItemType.where(type_name: params[:type_name]).first.id}))
     @item = Item.new(item_params.merge!({item_type_id: @item_type_id, owned_by: user}))
 
     respond_to do |format|
       if @item.save
         unless redirect_path.nil?
           Rails.cache.delete("redirect_path")
-          puts "redirect_path is deleted in items"
           format.html { redirect_to send redirect_path, from_id: @item.id, notice: "Item was successfully created." }
         else
           format.html { redirect_to @item, notice: "Item was successfully created." }

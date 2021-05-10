@@ -91,32 +91,8 @@ class AutographsController < ApplicationController
     
     respond_to do |format|
       if @autograph.save
-        # AuthenticationsAutograph.where(autograph_id: @autograph.id, authentication_id: params[:autograph][:authentication_ids]).all.each do |record|
-        #   record.update(authentication_number: params[:autograph][:autographs_authentications][:authentication_number], owned_by: user)
-        # end
-
-        # AuthenticationsAutograph.where(autograph_id: @autograph.id, authentication_id: params[:autograph][:authentication_ids])
-        # .update(authentication_number: params[:autograph][:autographs_authentications][:authentication_number], owned_by: user)
-
-        # if params[:auth_name] != ''
-        #   authentication = Authentication.new(authentication_params)
-        #   authentication.save
-        #   authentication_id = authentication.id
-        # elsif params[:autograph][:authentication_ids] != ''
-        #   authentication_id = params[:autograph][:authentication_ids]
-        # end
-
-        # unless authentication_id.nil?
-        #   merged_params = autograph_authentication_params.merge!({autograph_id: @autograph.id, 
-        #   authentication_id: authentication_id, 
-        #   authentication_number: params[:authentication_number],
-        #   owned_by: user})
-        #   autograph_authentication = AuthenticationsAutograph.new(merged_params)
-        #   autograph_authentication.update(merged_params)
-        # end
                 
         Rails.cache.delete("redirect_path")
-        puts "redirect_path is deleted in autographs"
         unless redirect_path.nil? or redirect_path.eql? 'new_autograph_path'
           if item_id.nil?
             format.html { redirect_to send redirect_path, notice: "Autograph was successfully created." }
@@ -124,7 +100,6 @@ class AutographsController < ApplicationController
             format.html { redirect_to send redirect_path, item_id, notice: "Autograph was successfully created." }
           end
           Rails.cache.delete("redirect_path")
-          puts "redirect_path is deleted in autographs"
         else
           format.html { redirect_to @autograph, notice: "Autograph was successfully created." }
           format.json { render :show, status: :created, location: @autograph }
@@ -160,10 +135,6 @@ class AutographsController < ApplicationController
         authentication.save
         v[:authentication_id] = authentication.id
       end
-      puts "k #{k}"
-      puts "v #{v}"
-      puts "id #{@autograph.id}"
-      puts AuthenticationsAutograph.where(authentication_id: v[:authentication_id],autograph_id: @autograph.id, owned_by: user)
       AuthenticationsAutograph.upsert(
         {authentication_id: v[:authentication_id],autograph_id: @autograph.id,authentication_number: v[:authentication_number], owned_by: user},
       unique_by: [:authentication_id, :autograph_id])        

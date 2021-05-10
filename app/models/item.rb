@@ -19,12 +19,7 @@ class Item < ApplicationRecord
   def destroy  
     value = value_id
     purchase = purchase_id
-    puts "item id: #{id}"
     super
-    puts "here"
-    puts "value #{value}"
-    puts "purchase #{purchase}"
-    puts "auto value #{Value.find(value).estimated_value}"
     Value.find(value).delete if value
     Purchase.find(purchase).delete if purchase
   end

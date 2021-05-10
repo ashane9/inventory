@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
     unless Rails.cache.read("redirect_path").nil?
       redirect_path = Rails.cache.read("redirect_path")
       id_arg = Rails.cache.read("from_id")
-      # Rails.cache.delete("redirect_path")
-      # puts "redirect_path is deleted in application controller"
       send(redirect_path, id_arg)
     else
       send default_path

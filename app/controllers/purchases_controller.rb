@@ -75,7 +75,6 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/1/edit
   def edit
-    puts @purchase.date
     from_object = params[:from_object]
     Rails.cache.write("from_object", from_object)
   end
@@ -123,7 +122,6 @@ class PurchasesController < ApplicationController
             format.html { redirect_to send @redirect_path, @from_id, notice: "Purchase was successfully created." }
           end
           Rails.cache.delete("redirect_path")
-          puts "redirect_path is deleted in purchases"
         else
           format.html { redirect_to @purchase, notice: "Purchase was successfully created." }
           format.json { render :show, status: :created, location: @purchase }
