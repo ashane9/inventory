@@ -14,6 +14,7 @@ gem 'jquery-turbolinks'
 gem 'omniauth-auth0', '~> 2.5'
 gem 'omniauth-rails_csrf_protection', '~> 0.1' 
 gem 'composite_primary_keys', '>12.0'
+gem 'activesupport', '6.0.3.6'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 #composite_primary_keys version 13 isnt out and is required version to work with rails 6.1 
