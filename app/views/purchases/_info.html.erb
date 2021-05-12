@@ -46,6 +46,11 @@
   </p>
 
   <p>
+    <strong>Discount:</strong>
+    <%= number_to_currency(@purchase.discount) %>
+  </p>
+
+  <p>
     <strong>Total Cost:</strong>
     <%= number_to_currency(@purchase.total_cost) %>
   </p>

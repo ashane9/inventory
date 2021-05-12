@@ -1,9 +1,4 @@
 
-// $(document).ready("turbolinks:load", () => {
-//   $('[data-tooltip-display="true"]').tooltip(),
-//   flatpickr("[class='flatpickr']", {})
-// });
-
 add_new_item_type = function () {
   if ($("#item_item_type_id option:selected").text() == "Add New Item Type") {
     $("#new_item_type").show();
@@ -58,20 +53,7 @@ var formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD'});
 
 formatCurrency = function (target) {
-  // if (target.value.length === 1) {target.value = '$0.00';}
-  console.log("hehe");
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d{1,3}?)(\d{3})([\.|,].*)$/,'$1,$2$3'));
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d{1,3}?)(\d{3})([\.|,].*)$/,'$1,$2$3').replace(/^[0](,|(\d))/,'$2'));
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d{1,3})(\d{3})([\.|,])/g,'$1,$2$3').replace(/^[0](,|(\d))/,'$2'));
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d)(,?)(\d{3})([\.|,])/g,'$1,$2$3$4').replace(/^[0](,|(\d))/,'$2'));
-  // console.log(target.value);
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1'));
-  // console.log(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d\d\d)(\.|,)/g,',$1$2'));
-  
-  // target.value = '$'.concat(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d{1,3}?)(\d{3})([\.|,].*)$/,'$1,$2$3').replace(/^[0](,|(\d))/,'$2'));
-  console.log(target.value);
   if (target.value.length === 0 || target.value == '$') {
-    console.log('deleted');
     target.value = '$0.00';
   } else {
     target.value = '$'.concat(target.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1').replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").replace(/^[0](,|(\d))/,'$2'));
@@ -118,7 +100,7 @@ document.addEventListener("turbolinks:load", () => {
 
   //total cost of purchase
   sum_total_cost = function () {
-    var cost = (parseFloat($("#sale_price").val().replace(/[$]/,'')) || 0) + (parseFloat($("#buyer_premium").val().replace(/[$]/,'')) || 0) + (parseFloat($("#shipping").val().replace(/[$]/,'')) || 0) + (parseFloat($("#additional").val().replace(/[$]/,'')) || 0);
+    var cost = (parseFloat($("#sale_price").val().replace(/[$]/,'')) || 0) + (parseFloat($("#buyer_premium").val().replace(/[$]/,'')) || 0) + (parseFloat($("#shipping").val().replace(/[$]/,'')) || 0) + (parseFloat($("#additional").val().replace(/[$]/,'')) || 0) - (parseFloat($("#discount").val().replace(/[$]/,'')) || 0);
     $("#total_cost").text(formatter.format(cost));
   };
   $("#sale_price").on("keyup",function(e){
@@ -134,6 +116,10 @@ document.addEventListener("turbolinks:load", () => {
     sum_total_cost();
   });
   $("#additional").on("keyup",function(e){
+    formatCurrency(e.target); 
+    sum_total_cost();
+  });
+  $("#discount").on("keyup",function(e){
     formatCurrency(e.target); 
     sum_total_cost();
   });
@@ -177,19 +163,5 @@ document.addEventListener("turbolinks:load", () => {
 
 });
 
-
-
-
-
-
-/*$(document).ready(function(e){
-  $('.search-panel .dropdown-menu').find('a').click(function(e) {
-  e.preventDefault();
-  var param = $(this).attr("href").replace("#","");
-  var concept = $(this).text();
-  $('.search-panel span#search_concept').text(concept);
-  $('.input-group #search_param').val(param);
-});
-});*/
 
 

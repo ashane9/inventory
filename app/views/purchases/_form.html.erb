@@ -68,6 +68,11 @@
     <%= form.text_field :additional, placeholder: '$0.00', value: number_to_currency(form.object.additional), class: "form-control", id: "additional" %>
   </div>
 
+  <div class="field form-group">
+    <%= form.label :discount, class: "control-label" %>
+    <%= form.text_field :discount, placeholder: '$0.00', value: number_to_currency(form.object.discount), class: "form-control", id: "discount" %>
+  </div>
+
   <div class="field">
     <%= form.label :total_cost, class: "control-label" %>
     <p id='total_cost'>

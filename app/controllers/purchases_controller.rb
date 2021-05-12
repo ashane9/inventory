@@ -13,7 +13,8 @@ class PurchasesController < ApplicationController
     purchase_params[:sale_price].gsub(/[^\d\.]/, '').to_f + 
     purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f + 
     purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f + 
-    purchase_params[:additional].gsub(/[^\d\.]/, '').to_f
+    purchase_params[:additional].gsub(/[^\d\.]/, '').to_f - 
+    purchase_params[:discount].gsub(/[^\d\.]/, '').to_f
   end
 
   def return_value_of_symbol(obj,sym)
@@ -109,6 +110,7 @@ class PurchasesController < ApplicationController
       buyer_premium: purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f,
       shipping: purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f,
       additional: purchase_params[:additional].gsub(/[^\d\.]/, '').to_f,
+      discount: purchase_params[:discount].gsub(/[^\d\.]/, '').to_f,
       total_cost: total_sale_price}))
     
     respond_to do |format|
@@ -141,6 +143,7 @@ class PurchasesController < ApplicationController
         buyer_premium: purchase_params[:buyer_premium].gsub(/[^\d\.]/, '').to_f,
         shipping: purchase_params[:shipping].gsub(/[^\d\.]/, '').to_f,
         additional: purchase_params[:additional].gsub(/[^\d\.]/, '').to_f,
+        discount: purchase_params[:discount].gsub(/[^\d\.]/, '').to_f,
         total_cost: total_sale_price}))
         from_object = Rails.cache.read("from_object")
         if from_object         
@@ -175,7 +178,7 @@ class PurchasesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def purchase_params
-      params.require(:purchase).permit(:invoice_number, :purchase_type_id, :location, :date, :source, :sale_price, :buyer_premium, :shipping, :additional, :total_cost)
+      params.require(:purchase).permit(:invoice_number, :purchase_type_id, :location, :date, :source, :sale_price, :buyer_premium, :shipping, :additional, :discount, :total_cost)
     end
     def purchase_type_params
       params.permit(:type_name)

@@ -1,1 +1,4 @@
-
+add discount/reward to purchase info
+increase mobile image size
+add sold info
+add view image button
