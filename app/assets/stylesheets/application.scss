@@ -51,3 +51,25 @@
   font-size: calc(100% + 1vw + 1vh);
 }
 
+.carousel .carousel-indicators li {
+  background-color: #fff;
+  background-color: rgba(70, 70, 70, 0.25);
+}
+.carousel .carousel-indicators .active {
+  background-color: #444;
+}
+
+.item_image {
+  width: auto;
+  height: 45vw;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) { 
+  
+.item_image {
+  width: auto;
+  height: 22vw;
+  object-fit: cover;
+ }
+}

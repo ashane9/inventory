@@ -73,10 +73,23 @@
   <div class="form-actions pt-2 pb-3 text-center">
     <%= link_to_add_row('Add Authentication', form, :authentications_autographs, class: 'btn btn-secondary') %>
   </div>
+  
+  <div class="field form-group text-center">
+    <% if @autograph.image.attached? %>
+      <% @autograph.image.each do |img| %>
+        <div>
+        <%= image_tag img, style: "height:20%;width:20%" %>
+        </div>
+        <%= link_to 'Remove', delete_image_attachment_item_url(img.id),
+                    method: :delete,
+                      data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    <% end %>
+  </div>
 
   <div class="field form-group">
-    <%= form.label :image, class: "control-label" %>
-    <%= form.file_field :image, class: "form-control" %>
+    <%= form.label 'Add Image', class: "control-label" %>
+    <%= form.file_field :image, multiple: true, class: "form-control" %>
   </div>
 
   <div class="actions form-group py-3">

@@ -64,6 +64,11 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
+        if params[:item][:image].present?
+          params[:item][:image].each do |img|
+            @item.image.attach(img)
+          end
+        end
         format.html { redirect_to @item, notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -71,6 +76,12 @@ class ItemsController < ApplicationController
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: request.referer)
   end
 
   # DELETE /items/1 or /items/1.json

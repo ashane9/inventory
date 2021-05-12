@@ -143,7 +143,11 @@ class AutographsController < ApplicationController
     respond_to do |format|
       if @autograph.update(autograph_params.merge!({ 
         profession_id: @profession_id, organization_id: @organization_id, owned_by: user }))
-
+        if params[:autograph][:image].present?
+          params[:autograph][:image].each do |img|
+            @autograph.image.attach(img)
+          end
+        end
         format.html { redirect_to @autograph, notice: "Autograph was successfully updated." }
         format.json { render :show, status: :ok, location: @autograph }
       else
@@ -151,6 +155,12 @@ class AutographsController < ApplicationController
         format.json { render json: @autograph.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: request.referer)
   end
 
   # DELETE /autographs/1 or /autographs/1.json

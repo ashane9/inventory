@@ -18,8 +18,31 @@
       <div class="team-single py-3">
         <div class="row">
           <div class="col-lg-6 col-md-7 text-center">
-            <div class="team-single-img">
-              <%= image_tag @autograph.image, style: 'height:80%;width:80%;' if @autograph.image.attached? %>
+            <div class="team-single-img">              
+              <% if @autograph.image.attached?%>
+               <div id="carouselItems" class="carousel slide" data-ride="carousel" data-interval="false">
+                  <ol class="carousel-indicators">
+                    <% @autograph.image.size.times do |i| %>
+                      <li data-target="#carouselItems" data-slide-to="<%= i %>" class="<%= "active" if i.zero? %>"></li>
+                    <% end %>
+                  </ol>
+                  <div class="carousel-inner">
+                    <%@autograph.image.each_with_index do |img,index| %>
+                    <div class="carousel-item <%= "active" if index.zero? %>">
+                      <%= image_tag img, class: 'item_image' %>
+                    </div>
+                    <%end%>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselItems" role="button" data-slide="prev">
+                    <span class="fas fa-chevron-left fa-2x" aria-hidden="true" style="color: black"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselItems" role="button" data-slide="next">
+                    <span class="fas fa-chevron-right fa-2x" aria-hidden="true" style="color: black"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div> 
+              <% end %>
             </div>
             <div class="bg-light-gray py-4">
               <h4>Description</h4>

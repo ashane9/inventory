@@ -1,6 +1,6 @@
 class Autograph < ApplicationRecord
   belongs_to :item
-  has_one_attached :image
+  has_many_attached :image
   belongs_to :purchase, optional: true
   has_many :authentications_autographs, dependent: :destroy
   has_many :authentications, through: :authentications_autographs

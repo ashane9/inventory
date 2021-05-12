@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   resources :images
   resources :autographs
   #get 'items/search_result', to: 'items#search_result'
-  resources :items
+  resources :items do
+    member do      
+      delete :delete_image_attachment
+    end
+  end
   get :autocomplete, to: 'autographs#autocomplete'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   
