@@ -11,4 +11,7 @@ class HomeController < ApplicationController
     reset_session
   end
 
+  def support
+  end
+
 end
