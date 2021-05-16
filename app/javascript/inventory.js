@@ -100,7 +100,7 @@ document.addEventListener("turbolinks:load", () => {
 
   //total cost of purchase
   sum_total_cost = function () {
-    var cost = (parseFloat($("#sale_price").val().replace(/[$]/,'')) || 0) + (parseFloat($("#buyer_premium").val().replace(/[$]/,'')) || 0) + (parseFloat($("#shipping").val().replace(/[$]/,'')) || 0) + (parseFloat($("#additional").val().replace(/[$]/,'')) || 0) - (parseFloat($("#discount").val().replace(/[$]/,'')) || 0);
+    var cost = (parseFloat($("#sale_price").val().replace(/[$|,]/g,'')) || 0) + (parseFloat($("#buyer_premium").val().replace(/[$|,]/g,'')) || 0) + (parseFloat($("#shipping").val().replace(/[$|,]/g,'')) || 0) + (parseFloat($("#additional").val().replace(/[$|,]/g,'')) || 0) - (parseFloat($("#discount").val().replace(/[$|,]/g,'')) || 0);
     $("#total_cost").text(formatter.format(cost));
   };
   $("#sale_price").on("keyup",function(e){

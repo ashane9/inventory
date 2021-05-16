@@ -1,4 +1,6 @@
-add discount/reward to purchase info
 increase mobile image size
 add sold info
-add view image button
+add view image button enlarge
+move image bars to bottom of image
+add view only for other members
+error statement for image upload size (6 images failed at one time)
