@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_213441) do
+ActiveRecord::Schema.define(version: 2021_05_16_024747) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -128,20 +128,20 @@ ActiveRecord::Schema.define(version: 2021_05_12_213441) do
     t.integer "purchase_type_id", null: false
     t.string "location"
     t.date "date"
-    t.decimal "sale_price", precision: 5, scale: 2
-    t.decimal "buyer_premium", precision: 5, scale: 2
-    t.decimal "shipping", precision: 5, scale: 2
-    t.decimal "total_cost", precision: 6, scale: 2
+    t.decimal "sale_price", precision: 10, scale: 2
+    t.decimal "buyer_premium", precision: 10, scale: 2
+    t.decimal "shipping", precision: 10, scale: 2
+    t.decimal "total_cost", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "owned_by"
-    t.decimal "additional", precision: 5, scale: 2
-    t.decimal "discount", precision: 5, scale: 2
+    t.decimal "additional", precision: 10, scale: 2
+    t.decimal "discount", precision: 10, scale: 2
     t.index ["purchase_type_id"], name: "index_purchases_on_purchase_type_id"
   end
 
   create_table "values", force: :cascade do |t|
-    t.decimal "estimated_value", precision: 6, scale: 2
+    t.decimal "estimated_value", precision: 10, scale: 2
     t.date "as_of_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
