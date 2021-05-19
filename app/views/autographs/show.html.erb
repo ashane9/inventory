@@ -28,9 +28,30 @@
                   </ol>
                   <div class="carousel-inner">
                     <%@autograph.image.each_with_index do |img,index| %>
-                    <div class="carousel-item <%= "active" if index.zero? %>">
-                      <%= image_tag img, class: 'item_image' %>
-                    </div>
+                      <div class="carousel-item <%= "active" if index.zero? %>">
+                        <!--Modal-->
+                        <div class="modal fade" id=<%="modal#{index}"%> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+
+                            <!--Content-->
+                            <div class="modal-content">
+                              <!--Body-->
+                              <div class="modal-body mb-0 p-0">
+                                <button type="button" class="close p-2" style="color: black;" data-dismiss="modal">
+                                  <i class="fas fa-times"></i>
+                                </button>
+                              
+                                <div>
+                                  <%= image_tag img, class: "img-fluid"%>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <a data-toggle="modal" data-target=<%="#modal#{index}"%>><%= image_tag img, class: 'item_image' %></a>
+
+                      </div>
                     <%end%>
                   </div>
                   <a class="carousel-control-prev" href="#carouselItems" role="button" data-slide="prev">
