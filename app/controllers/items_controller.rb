@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   include Secured
   before_action :force_json, only: :search
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[ edit update destroy ]
 
   # GET /items or /items.json
   def index        
@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
   # GET /items/1 or /items/1.json
   def show
     redirect_setup
+    @item = Item.find(params[:id])
   end
 
   def search

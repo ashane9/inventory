@@ -1,6 +1,6 @@
 class AutographsController < ApplicationController
   include Secured
-  before_action :set_autograph, only: %i[ show edit update destroy ]
+  before_action :set_autograph, only: %i[ edit update destroy ]
   helper_method :get_item_id, :cancel, :link_to_cancel
 
   # GET /autographs or /autographs.json
@@ -31,7 +31,9 @@ class AutographsController < ApplicationController
 
   # GET /autographs/1 or /autographs/1.json
   def show
-      redirect_setup
+    redirect_setup
+    @autograph = Autograph.find(params[:id])
+    @authentication_autograph = AuthenticationsAutograph.where(autograph_id: @autograph.id)
   end
 
   # GET /autographs/new

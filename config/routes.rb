@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
-  get 'home/new_autograph'
+  get 'add_autograph', to: 'home#new_autograph'
+  get 'search', to: 'home#search'
   get 'items/search', to: 'items#search'
   post 'autographs/get_item', to: 'autographs#get_item'
   get 'reset', to: 'home#reset'
@@ -10,7 +11,11 @@ Rails.application.routes.draw do
   resources :item_types
   resources :purchases
   resources :images
-  resources :autographs
+  resources :autographs do
+    member do 
+      delete :delete_image_attachment
+    end
+  end
   #get 'items/search_result', to: 'items#search_result'
   resources :items do
     member do      

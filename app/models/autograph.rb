@@ -6,6 +6,10 @@ class Autograph < ApplicationRecord
   has_many :authentications, through: :authentications_autographs
   validates :name, :presence => true
 
+  def self.get_item_name
+    Item.where(id: self.item_id).first.item_name
+  end
+
   def self.count(owner)
     where(owned_by: owner).count
   end

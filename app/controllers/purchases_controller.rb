@@ -1,6 +1,6 @@
 class PurchasesController < ApplicationController
   include Secured
-  before_action :set_purchase, only: %i[ show edit update destroy ]
+  before_action :set_purchase, only: %i[ edit update destroy ]
   helper_method :add_purchase_id, :get_purchase_name, :get_purchase_description, :get_autograph_info, :get_item_info, :total_sale_price
 
   # GET /purchases or /purchases.json
@@ -66,6 +66,7 @@ class PurchasesController < ApplicationController
   def show
     from_object = params[:from_object]
     Rails.cache.write("from_object", from_object)
+    @purchase = Purchase.find(params[:id])
   end
 
   # GET /purchases/new

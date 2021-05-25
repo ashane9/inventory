@@ -9,8 +9,10 @@
         <h1 class="display-4 px-2"><%= @item.item_name %></h1>
       </div>
       <div class="col-1">
-        <%= link_to edit_item_path(@item), class: "d-flex align-items-center justify-content-around" do %>
-          <i class="fas fa-edit fa-2x mr-4"></i>
+        <% unless @item.owned_by != user %>
+          <%= link_to edit_item_path(@item), class: "d-flex align-items-center justify-content-around" do %>
+            <i class="fas fa-edit fa-2x mr-4"></i>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -134,9 +136,10 @@
                     <div class="card card-body text-left py-2">                      
                       <% @purchase = Purchase.where(id: @item.purchase_id, owned_by: user).first %>
                       <div class="text-center">
-                        <%= link_to edit_purchase_path(@purchase, from_object: "/#{@item.class.to_s.downcase}s/#{@item.id}") do %>
-                          <%  %>
-                          <i class="fas fa-edit fa-1x text-center"></i>
+                        <% unless @purchase.owned_by != user %>
+                          <%= link_to edit_purchase_path(@purchase, from_object: "/#{@item.class.to_s.downcase}s/#{@item.id}") do %>
+                            <i class="fas fa-edit fa-1x text-center"></i>
+                          <% end %>
                         <% end %>
                       </div>
                       <%= render 'purchases/info', {purchase: @purchase, from: @item} %>                      
@@ -170,9 +173,10 @@
                     <div class="card card-body text-left py-2">                      
                       <% @value = Value.where(id: @item.value_id, owned_by: user).first %>
                       <div class="text-center">
-                        <%= link_to edit_value_path(@value, from_object: "/#{@item.class.to_s.downcase}s/#{@item.id}") do %>
-                          <%  %>
-                          <i class="fas fa-edit fa-1x text-center"></i>
+                        <% unless @value.owned_by != user %>
+                          <%= link_to edit_value_path(@value, from_object: "/#{@item.class.to_s.downcase}s/#{@item.id}") do %>
+                            <i class="fas fa-edit fa-1x text-center"></i>
+                          <% end %>
                         <% end %>
                       </div>
                       <%= render 'values/info', object: @value %>

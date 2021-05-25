@@ -1,0 +1,141 @@
+<div class="container-fluid h-100">
+  <div class="d-flex align-items-center flex-column h-100 my-5">
+      <h1 class="text-center">Search</h1>
+      
+      <%= form_for('search', method: 'get',:html => { :class => "w-100 mx-3" }) do |form| %>
+        <div class="field form-group row text-center">
+          <div class= "offset-col-1 col-3 px-0">
+            <label><b>Both:</b></label>
+            <%= form.radio_button(:type, 'Both', {checked: true}) %>
+          </div>
+          <div class= "col-4 px-0">
+            <label><b>Item:</b></label>
+            <%= form.radio_button(:type, 'Item') %>
+          </div>
+          <div class="col-4 px-0">
+            <label><b>Autograph:</b></label>
+            <%= form.radio_button(:type, 'Autograph') %>
+          </div>
+        </div>
+        <div class="field form-group text-center">
+          <label><b>Item Type:</b></label>
+          <% ItemType.all.each do |type| %>
+            <%= form.label type.type_name, class: "control-label pl-2" %>
+            <%= form.check_box(:item_type, { :multiple => true }, type.id, nil) %>
+          <% end %>
+        </div>
+
+        <div class="field form-group row text-center">
+          <div class="col-6"> 
+            <label><b>Profession:</b></label>
+            <%= form.collection_select :profession_name, Profession.order(:profession_name),:id,:profession_name,{},
+            {multiple: true, class: "form-control"} %>
+          </div>
+          <div class="col-6"> 
+            <label><b>Organization:</b></label>
+            <%= form.collection_select :org_name, Organization.order(:org_name),:id,:org_name,{},
+            {multiple: true, class: "form-control"} %>
+          </div>
+        </div>
+        
+        <div class="field form-group row text-center">
+          <div class="col-6"> 
+            <label><b>Manufacturer:</b></label>
+            <%= form.collection_select :manufacturer, Item.where.not(manufacturer: '').select(:manufacturer).distinct,:manufacturer,:manufacturer,{},
+            {multiple: true, class: "form-control"} %>
+           </div>
+          <div class="col-6"> 
+            <label><b>Size:</b></label>
+            <%= form.collection_select :size, Item.where.not(size: '').select(:size).distinct,:size,:size,{},
+            {multiple: true, class: "form-control"} %>
+           </div>
+        </div>
+
+        <div class="field form-group row text-center">
+          <div class="col-6"> 
+            <label><b>Purchase Date:</b></label>
+            <div class="row">
+              <div class="col">  
+                <%= form.text_field :purchase_date, placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
+              </div>
+              <div class="col">  
+                <%= form.collection_select :purchase_comparison, ['Equal to','Before','After'], :to_s, :to_s %>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 pl-1"> 
+            <label><b>Autograph Date:</b></label>
+            <div class="row">
+              <div class="col">  
+            <%= form.text_field :autograph_date, placeholder: 'MM/DD/YYYY', maxlength: 10, size: 12, data: {behavior: 'flatpickr'}, html: {class: '.col-md-3 form-control', autocomplete: "off" } %>
+            </div>
+              <div class="col">  
+              <%= form.collection_select :autograph_comparison, ['Equal to','Before','After'], :to_s, :to_s %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field form-group text-center"> 
+          <label><b>Owner:</b></label>
+          <%= form.collection_select :owned_by, Item.select(:owned_by).distinct,:owned_by,:owned_by, {prompt: "Select Owner"}%>
+        </div>
+        
+        <div class="field form-group text-center">
+          <label><b>Search Name/Description:</b></label><br>
+          <%= form.text_field :search_text, placeholder: 'Type here...', class: 'form-control' %>
+        </div>
+        
+        <div class="actions form-group py-3 text-center">
+          <%= form.submit 'Search', class: "form-control btn-dark" %>
+        </div>
+          
+      <% end %>
+      <%= link_to "Clear Search", search_path, {class: "nav-link"}%>
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Item/Item Type</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    
+    <% @items.each do |result| %>
+      <tr scope="row">  
+        <td>
+          <%= link_to result.item_name, item_path(result.id) %>
+        </td>
+        <td>
+          <%= result.description %>
+        </td>
+        <td>
+          <%= result.item_type.type_name %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% @autographs.each do |result| %>
+      <tr scope="row">  
+        <td>
+          <%= link_to result.name, autograph_path(result.id) %>
+        </td>
+        <td>
+          <%= result.description %>
+        </td>
+        <td>          
+          <%= link_to result.item.item_name, item_path(result.item_id) %>
+        </td>
+    <% end %>
+
+
+    </tbody>
+  </table>
+    
+    <%= link_to 'Cancel', root_path %>
+  </div>
+</div>

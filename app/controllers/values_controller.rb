@@ -1,6 +1,6 @@
 class ValuesController < ApplicationController
   include Secured
-  before_action :set_value, only: %i[ show edit update destroy ]
+  before_action :set_value, only: %i[ edit update destroy ]
   helper_method :get_value_name, :get_value_description, :get_item_info, :get_autograph_info
 
   # GET /values or /values.json
@@ -53,6 +53,7 @@ class ValuesController < ApplicationController
   def show
     from_object = params[:from_object]
     Rails.cache.write("from_object", from_object)
+    @value = Value.find(params[:id])
   end
 
   # GET /values/new
