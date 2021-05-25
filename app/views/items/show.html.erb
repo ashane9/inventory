@@ -188,23 +188,26 @@
           </div>
         </div>       
 
-        <div class="row">
-          <% if @item.purchase_id.nil? %>
-            <div class="col text-center py-2">
-              <%= link_to 'Add Purchase Information', new_purchase_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
-            </div>
-          <% end %>
 
-          <div class="col text-center py-2">
-            <%= link_to 'Add Autograph', new_autograph_path(from: "item_path",from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
+        <% unless @item.owned_by != user %>
+          <div class="row">
+            <% if @item.purchase_id.nil? %>
+              <div class="col text-center py-2">
+                <%= link_to 'Add Purchase Information', new_purchase_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
+              </div>
+            <% end %>
+
+            <div class="col text-center py-2">
+              <%= link_to 'Add Autograph', new_autograph_path(from: "item_path",from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
+            </div>
+
+            <% if @item.value_id.nil? %>
+              <div class="col text-center py-2">
+                <%= link_to 'Add Item Value', new_value_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
+              </div>
+            <% end %>
           </div>
-
-          <% if @item.value_id.nil? %>
-            <div class="col text-center py-2">
-              <%= link_to 'Add Item Value', new_value_path(from: 'item_path',from_id: @item.id), {class: "btn btn-block btn-dark px-0"} %>
-            </div>
-          <% end %>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
