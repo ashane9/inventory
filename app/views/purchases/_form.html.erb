@@ -64,7 +64,7 @@
   </div>
 
   <div class="field form-group">
-    <%= form.label 'Additional Charge', class: "control-label" %>
+    <label class="control-label">Additional Fee/Inscription Cost:</label>
     <%= form.text_field :additional, placeholder: '$0.00', value: number_to_currency(form.object.additional), class: "form-control", id: "additional" %>
   </div>
 
