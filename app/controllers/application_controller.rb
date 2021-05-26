@@ -44,7 +44,11 @@ class ApplicationController < ActionController::Base
   end
 
   def user
-    session[:userinfo]['name']
+    if session[:userinfo]
+      session[:userinfo]['name']
+    else
+      ''
+    end
   end
 
 end
