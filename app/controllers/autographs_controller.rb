@@ -131,15 +131,17 @@ class AutographsController < ApplicationController
       @organization_id = params[:autograph][:organization_id]
     end
 
-    params[:autograph][:authentications_autographs].each do |k,v|      
-      if v[:auth_name] != ''
-        authentication = Authentication.new(auth_name: v[:auth_name])
-        authentication.save
-        v[:authentication_id] = authentication.id
+    unless params[:autograph][:authentications_autographs].nil?
+      params[:autograph][:authentications_autographs].each do |k,v|      
+        if v[:auth_name] != ''
+          authentication = Authentication.new(auth_name: v[:auth_name])
+          authentication.save
+          v[:authentication_id] = authentication.id
+        end
+        AuthenticationsAutograph.upsert(
+          {authentication_id: v[:authentication_id],autograph_id: @autograph.id,authentication_number: v[:authentication_number], owned_by: user},
+        unique_by: [:authentication_id, :autograph_id])        
       end
-      AuthenticationsAutograph.upsert(
-        {authentication_id: v[:authentication_id],autograph_id: @autograph.id,authentication_number: v[:authentication_number], owned_by: user},
-      unique_by: [:authentication_id, :autograph_id])        
     end
     
     respond_to do |format|
