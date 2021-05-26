@@ -148,7 +148,7 @@
                   </a>
                   <div class="collapse" id="collapsePurchase">
                     <div class="card card-body text-left py-2">                      
-                      <% @purchase = Purchase.where(id: @autograph.purchase_id, owned_by: user).first %>
+                      <% @purchase = Purchase.where(id: @autograph.purchase_id).first %>
                       <div class="text-center">
                         <% unless @purchase.owned_by != user %>
                           <%= link_to edit_purchase_path(@purchase, from_object: "/#{@autograph.class.to_s.downcase}s/#{@autograph.id}") do %>
@@ -169,7 +169,7 @@
                   </a>
                   <div class="collapse" id="collapseValue">
                     <div class="card card-body text-left py-2">                      
-                      <% @value = Value.where(id: @autograph.value_id, owned_by: user).first %>
+                      <% @value = Value.where(id: @autograph.value_id).first %>
                       <div class="text-center">
                         <% unless @value.owned_by != user %>
                           <%= link_to edit_value_path(@value, from_object: "/#{@autograph.class.to_s.downcase}s/#{@autograph.id}") do %>
