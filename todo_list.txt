@@ -2,4 +2,6 @@
 add sold info
 move image bars to bottom of image
 add view only for other members
-error statement for image upload size (6 images failed at one time)
+add error statement for image upload size (6 images failed at one time)
+add back functionality to search page
+retain search criteria

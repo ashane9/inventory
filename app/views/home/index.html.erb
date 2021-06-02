@@ -4,16 +4,46 @@
       <h1 class="text-center my-5">Welcome, <%= @user['name'] %></h1>
 
       <div>
-        <h5>Number of Items: </h5>
-        <p class="text-center">
-          <%= Item.count(@user['name']) %>
-        </p>
-      </div>
-      <div>
-        <h5>Number of Autographs: </h5>
-        <p class="text-center">
-          <%= Autograph.count(@user['name']) %>
-        </p>
+        <div class="row text-center">
+          <div class="col">
+            <h5>Number of <br>Items: </h5>
+            <h5>
+              <%= Item.count(@user['name']) %>
+            </h5>
+          </div>
+          <div class="col">
+            <h5>Number of Autographs: </h5>
+            <h5>
+              <%= Autograph.count(@user['name']) %>
+            </h5>
+          </div>
+        </div>
+
+        <br>
+        
+        <div class="row text-center">
+          <div class="col">
+            <h5>Total Cost of <br>Items: </h5>
+            <h5>
+              <%= number_to_currency(Purchase.item_purchases(@user['name']).sum_total_cost) %>
+            </h5>
+          </div>
+          <div class="col">
+            <h5>Total Cost of <br>Autographs: </h5>
+            <h5>
+              <%= number_to_currency(Purchase.autograph_purchases(@user['name']).sum_total_cost) %>
+            </h5>
+          </div>
+        </div>
+        
+        <br>
+        
+        <div class="text-center">
+          <h5>Total Cost: </h5>
+          <h5>
+            <%= number_to_currency(Purchase.owner(@user['name']).sum_total_cost) %>
+          </h5>
+        </div>
       </div>
 
     <% else %>
