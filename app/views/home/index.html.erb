@@ -44,6 +44,32 @@
             <%= number_to_currency(Purchase.owner(@user['name']).sum_total_cost) %>
           </h5>
         </div>
+
+        <br>
+        
+        <div class="row text-center">
+          <div class="col">
+            <h5>Total Value of <br>Items: </h5>
+            <h5>
+              <%= number_to_currency(Value.item_value(@user['name']).sum_total_value) %>
+            </h5>
+          </div>
+          <div class="col">
+            <h5>Total Value of <br>Autographs: </h5>
+            <h5>
+              <%= number_to_currency(Value.autograph_value(@user['name']).sum_total_value) %>
+            </h5>
+          </div>
+        </div>
+        
+        <br>
+        
+        <div class="text-center">
+          <h5>Total Value: </h5>
+          <h5>
+            <%= number_to_currency(Value.owner(@user['name']).sum_total_value) %>
+          </h5>
+        </div>
       </div>
 
     <% else %>
