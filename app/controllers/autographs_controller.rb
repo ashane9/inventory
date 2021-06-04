@@ -6,7 +6,7 @@ class AutographsController < ApplicationController
   # GET /autographs or /autographs.json
   def index
     clear_redirect
-    @autographs = Autograph.where(owned_by: user).all
+    @autographs = Autograph.where(owned_by: user).all.order(id: :asc)
   end
 
   def cancel(root_path)

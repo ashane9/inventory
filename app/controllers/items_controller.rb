@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
   def index        
     clear_redirect
-    @items = Item.where(owned_by: user).all
+    @items = Item.where(owned_by: user).all.order(id: :asc)
   end
 
   # GET /items/1 or /items/1.json
