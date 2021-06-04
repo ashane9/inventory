@@ -5,3 +5,6 @@ add view only for other members
 add error statement for image upload size (6 images failed at one time)
 add back functionality to search page
 retain search criteria
+identify if item purchase includes autograph
+add purchase info for authentication purchase?
+change size to lookup table
