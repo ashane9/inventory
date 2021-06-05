@@ -12,6 +12,15 @@ add_new_item = function () {
   $("#new_item").show();
 };
 
+add_new_size = function () {
+  if ($("#item_size_id option:selected").text() == "Add New Size") {
+    $("#new_size").show();
+  } else {
+    console.log($("#item_size_id option:selected").text());
+    $("#new_size").hide();
+  }
+};
+
 add_new_purchase_type = function () {
   if ($("#purchase_purchase_type_id option:selected").text() == "Add New Purchase Type") {
     $("#new_purchase_type").show();

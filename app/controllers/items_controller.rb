@@ -43,7 +43,16 @@ class ItemsController < ApplicationController
     else
       @item_type_id = params[:item][:item_type_id]
     end
-    @item = Item.new(item_params.merge!({item_type_id: @item_type_id, owned_by: user}))
+
+    if params[:size] != ''
+      @size = Size.new(size_params)
+      @size.save
+      @size_id = Size.where(item_size: @size.item_size).first.id
+    else
+      @size_id = params[:item][:size_id]
+    end
+
+    @item = Item.new(item_params.merge!({item_type_id: @item_type_id, size_id: @size_id, owned_by: user}))
 
     respond_to do |format|
       if @item.save
@@ -63,8 +72,23 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    if params[:type_name] != ''
+      @item_type = ItemType.new(item_type_params)
+      @item_type.save
+      @item_type_id = ItemType.where(type_name: @item_type.type_name).first.id
+    else
+      @item_type_id = params[:item][:item_type_id]
+    end
+
+    if params[:size] != ''
+      @size = Size.new(size_params)
+      @size.save
+      @size_id = Size.where(item_size: @size.item_size).first.id
+    else
+      @size_id = params[:item][:size_id]
+    end
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.update(item_params.merge!({item_type_id: @item_type_id, size_id: @size_id, owned_by: user}))
         if params[:item][:image].present?
           params[:item][:image].each do |img|
             @item.image.attach(img)
@@ -106,6 +130,9 @@ class ItemsController < ApplicationController
     end
     def item_type_params
       params.permit(:type_name)
+    end
+    def size_params
+      params.permit(:item_size)
     end
     
   def force_json

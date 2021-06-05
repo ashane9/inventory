@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_16_024747) do
+ActiveRecord::Schema.define(version: 2021_06_05_011941) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -91,17 +91,19 @@ ActiveRecord::Schema.define(version: 2021_05_16_024747) do
   create_table "items", force: :cascade do |t|
     t.string "item_name", null: false
     t.text "description"
-    t.bigint "item_type_id", null: false
+    t.integer "item_type_id", null: false
     t.string "manufacturer"
     t.string "size"
     t.string "upc"
-    t.bigint "purchase_id"
-    t.bigint "value_id"
+    t.integer "purchase_id"
+    t.integer "value_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "owned_by"
+    t.integer "size_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
     t.index ["purchase_id"], name: "index_items_on_purchase_id"
+    t.index ["size_id"], name: "index_items_on_size_id"
     t.index ["value_id"], name: "index_items_on_value_id"
   end
 
@@ -140,6 +142,12 @@ ActiveRecord::Schema.define(version: 2021_05_16_024747) do
     t.index ["purchase_type_id"], name: "index_purchases_on_purchase_type_id"
   end
 
+  create_table "sizes", force: :cascade do |t|
+    t.string "item_size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "values", force: :cascade do |t|
     t.decimal "estimated_value", precision: 10, scale: 2
     t.date "as_of_date"
@@ -155,6 +163,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_024747) do
   add_foreign_key "autographs", "values"
   add_foreign_key "items", "item_types"
   add_foreign_key "items", "purchases"
+  add_foreign_key "items", "sizes"
   add_foreign_key "items", "values"
   add_foreign_key "purchases", "purchase_types"
 end

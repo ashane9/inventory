@@ -41,7 +41,15 @@
 
   <div class="field form-group">
     <%= form.label :size, class: "control-label" %>
-    <%= form.text_field :size, class: "form-control" %>
+    <%= form.collection_select :size_id, Size.order(:item_size),:id,:item_size, {prompt: "Select Size", 
+    include_blank: 'Add New Size'}, {class: "form-control", :onchange => "add_new_size()"} %>
+  </div>
+
+  <div class="field form-group" id="new_size" style="display:none">
+    <%= fields_for @size do |size_form|%>
+      <%= size_form.label 'Enter Size', class: "control-label" %>
+      <%= size_form.text_field :item_size, class: "form-control" %>
+    <% end %>
   </div>
 
   <div class="field form-group">

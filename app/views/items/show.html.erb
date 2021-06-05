@@ -108,7 +108,7 @@
                             <strong>Size:</strong>
                           </div>
                           <div class="col-5 text-center">
-                            <p><%= @item.size %></p>
+                            <p><%= Size.where(id: @item.size_id).first.item_size unless @item.size_id.nil?%></p>
                           </div>
                         </div>
                       </li>

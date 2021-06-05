@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   belongs_to :item_type
   belongs_to :value, optional: true
   belongs_to :purchase, optional: true
+  belongs_to :size, optional: true
   has_many_attached :image
 
   validates :item_name, :presence => true
