@@ -46,7 +46,7 @@
            </div>
           <div class="col-6"> 
             <label><b>Size:</b></label>
-            <%= form.collection_select :size, Item.where.not(size: '').select(:size).distinct,:size,:size,{},
+            <%= form.collection_select :size, Size.order(:item_size),:id,:item_size,{},
             {multiple: true, class: "form-control"} %>
            </div>
         </div>

@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
       @item_type_id = params[:item][:item_type_id]
     end
 
-    if params[:size] != ''
+    if params[:item_size] != ''
       @size = Size.new(size_params)
       @size.save
       @size_id = Size.where(item_size: @size.item_size).first.id
@@ -80,7 +80,7 @@ class ItemsController < ApplicationController
       @item_type_id = params[:item][:item_type_id]
     end
 
-    if params[:size] != ''
+    if params[:item_size] != ''
       @size = Size.new(size_params)
       @size.save
       @size_id = Size.where(item_size: @size.item_size).first.id

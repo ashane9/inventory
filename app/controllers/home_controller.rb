@@ -26,7 +26,7 @@ class HomeController < ApplicationController
       item_query = item_query + " and item_type_id in (#{params[:search][:item_type].join(',')})" unless params[:search][:item_type].nil?
       item_query = item_query + " and purchase_id in (#{@purchases.map{|purchase| purchase.id}.join(',')})" unless @purchases.nil? or @purchases.count == 0
       item_query = item_query + " and manufacturer in (#{params[:search][:manufacturer].compact.reject{|a| a==""}.map{|x|"'#{x}'"}.join(',')})" unless params[:search][:manufacturer].compact.reject{|a| a==""}.empty?
-      item_query = item_query + " and size in (#{params[:search][:size].compact.reject{|a| a==""}.map{|x|"'#{x}'"}.join(',')})" unless params[:search][:size].compact.reject{|a| a==""}.empty?
+      item_query = item_query + " and size_id in (#{params[:search][:size].join(',')})" unless params[:search][:size].nil?
       item_query = item_query + " and owned_by = '#{params[:search][:owned_by]}'" unless params[:search][:owned_by] == ""
       @items = Item.where(item_query) unless params[:search][:type] == 'Autograph'
       
