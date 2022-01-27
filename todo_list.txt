@@ -6,3 +6,6 @@ add back functionality to search page
 retain search criteria
 identify if item purchase includes autograph
 add purchase info for authentication purchase?
+change invoice number to also be order number
+add authentication specific to items
+setup shared shipping info for multiple items in order
